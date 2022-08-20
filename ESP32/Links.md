@@ -15,6 +15,8 @@ https://wolles-elektronikkiste.de/en/programming-the-esp32-with-arduino-code
  Hvis USB ikke vil starte? https://forum.arduino.cc/t/osc-did-not-start-keeps-showing-up-in-the-serial-monitor/516403/3
  Kør board_qc test - hvis chip revision er 00, er der noget galt.
   
+ Trouble shooting artikel: https://chome.nerpa.tech/mcu/arduino/usb-shield/troubleshooting-arduino-usb-host-shield/
+ 
 # Introduktion SPI på ESP32
  https://randomnerdtutorials.com/esp32-spi-communication-arduino/
  
