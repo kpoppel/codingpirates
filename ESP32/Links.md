@@ -12,6 +12,9 @@ https://wolles-elektronikkiste.de/en/programming-the-esp32-with-arduino-code
  
  Silketryk bag på USB modul er forkert: https://forum.pjrc.com/attachment.php?attachmentid=10950&d=1499204773
  
+ Hvis USB ikke vil starte? https://forum.arduino.cc/t/osc-did-not-start-keeps-showing-up-in-the-serial-monitor/516403/3
+ Kør board_qc test - hvis chip revision er 00, er der noget galt.
+  
 # Introduktion SPI på ESP32
  https://randomnerdtutorials.com/esp32-spi-communication-arduino/
  
