@@ -6,6 +6,7 @@ https://wolles-elektronikkiste.de/en/programming-the-esp32-with-arduino-code
 # USB HID modul
  https://blog.drorgluska.com/2017/07/rc-joystick-with-frsky-dht-module-and.html
  https://www.state-of-the-art.io/projects/pianolights/ (ESP32 diagram)
+ https://www.state-of-the-art.io/assets/images/projects/pianolights/screenshot-03.png (diagrammet)
  
  Tilføj library: USB-Host-Shield-20 by Oleg Mazurov
  https://github.com/felis/USB_Host_Shield_2.0
