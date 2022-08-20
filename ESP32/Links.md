@@ -7,6 +7,8 @@ USB HID modul:
  https://blog.drorgluska.com/2017/07/rc-joystick-with-frsky-dht-module-and.html
  https://www.state-of-the-art.io/projects/pianolights/ (ESP32 diagram)
  
+ Tilføj library: USB-Host-Shield-20 by Oleg Mazurov
+ 
 # VSCode
 
 platform.io installeres
