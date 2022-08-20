@@ -5,6 +5,7 @@ https://wolles-elektronikkiste.de/en/programming-the-esp32-with-arduino-code
 
 USB HID modul:
  https://blog.drorgluska.com/2017/07/rc-joystick-with-frsky-dht-module-and.html
+ https://www.state-of-the-art.io/projects/pianolights/ (ESP32 diagram)
  
 # VSCode
 
