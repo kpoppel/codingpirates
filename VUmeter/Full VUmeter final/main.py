@@ -4,8 +4,8 @@ from machine import Pin, ADC
 from VUmeterfl import VUmeter
 import _thread
 
-ssid = "EGE-Internet"
-password = ""
+ssid = "SSIDNAME"
+password = "YOUPASSWORD"
 
 # reference konstanter
 NOT_FOUND_TEMPLATE = '404.html'
