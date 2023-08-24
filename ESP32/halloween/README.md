@@ -57,4 +57,53 @@ Tryk så på "->" knappen.  Programmet skal gerne uploades til vores ESP32 board
 
 Hvis det går godt, er vi klar til at skrive det første program!
 
+# Det første program
+
+Vores første program skal tænde og slukke for en LED på vores board.
+Find en LED og en modstand, 220 Ohm f.eks.  Modstanden skal til for at begrænse den strøm der kan gå i LEDen, så den ikke går i stykker ("brænder af").
+
+Sæt modstanden på GND og i en tom række på protoboardet.  Sæt LED på "2"/GPIO2 og den samme række som modstanden.  Se billedet af boardet. 
+
+LEDs skal vende rigtigt, da det er en "diode".  Sådan en vil kun sende strøm i én retning.  En LED har et langt ben og et kort ben. Det lange ben er "+" og det korte er "-".  Strømmen løber fra "+" til "-", så det lange ben skal altså være på GPIO2 og det korte sammen med modstanden.
+
+Så skal programmet skrives. Lige nu ser det ud sådan her:
+
+    void app_main(void) {}
+
+Så det gør ikke meget.  Vi vil gerne styre LEDen med vores nye program.  Så her er det ny program så:
+
+    // Include driver for gpio to control pin
+    #include <driver/gpio.h>
+    // Include FreeRTOS for delay
+    #include <freertos/FreeRTOS.h>
+    #include <freertos/task.h>
+
+    #define LED_PIN 2 // LED connected to GPIO2
+
+    void app_main() {
+        // Configure pin
+        gpio_reset_pin(LED_PIN);
+        gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+        // Main loop
+        while(true) {
+            // Turn OFF LED
+            gpio_set_level(LED_PIN, 0);
+            // 500 ms delay
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+
+            Turn ON LED
+            gpio_set_level(LED_PIN, 1);
+            // 500 ms delay
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+        }
+    }
+
+
+# Registrering af knaptryk
+
+https://github.com/craftmetrics/esp32-button
+gpio_set_direction(GPIO_NUM_33, GPIO_MODE_INPUT);
+https://esp32tutorials.com/esp32-push-button-esp-idf-digital-input/
+HW debounce: https://www.youtube.com/watch?v=FOMI2J-y1Rc
 
