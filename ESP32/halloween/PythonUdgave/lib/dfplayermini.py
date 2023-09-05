@@ -1,4 +1,4 @@
-import utime
+import utime, time
 from machine import UART, Timer
 
 IDLE = 0
@@ -13,7 +13,7 @@ class Player:
         self._fadeout_timer = Timer(-1)
 
         self._volume = 15
-        self._max_volume = 15
+        self._max_volume = 30
         self._fadeout_speed = 0
 
     def cmd(self, command, parameter=0x00):
@@ -99,3 +99,18 @@ class Player:
 
     def module_reset(self):
         self.cmd(0x0C)
+        
+    # mit
+
+    def filesinfolder(self):
+        retry=True
+        while (retry):
+            self.uart.flush()
+            self.cmd(0x48)
+            time.sleep(0.2)
+            in_bytes = self.uart.read()
+            if not in_bytes: #timeout
+                return -1
+            if len(in_bytes)==10 and in_bytes[1]==255 and in_bytes[9]==239:
+                retry=False
+        return in_bytes[6]
