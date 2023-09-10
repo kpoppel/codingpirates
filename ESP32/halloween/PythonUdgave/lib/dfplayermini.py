@@ -104,7 +104,7 @@ class Player:
             self._fade_reset_volume = to
 
         # Start timer at intervals
-        fade_ms_per_step = int(fade_ms / self._volume)
+        fade_ms_per_step = int(fade_ms / abs(self._volume - to))
         self._fadeout_timer.init(
             period=fade_ms_per_step,
             callback=self._fade_process)
