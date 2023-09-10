@@ -1,8 +1,21 @@
+##
+## C library for inspiration found here:
+## https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299
 import utime, time
 from machine import UART, Timer
 
 class Player:
     MAX_VOLUME = 30
+    EQ_NORMAL = 0
+    EQ_POP = 1
+    EQ_ROCK = 2
+    EQ_JAZZ = 3
+    EQ_CLASSIC = 4
+    EQ_BASS = 5
+    PLAY_MODE_REPEAT = 0
+    PLAY_MODE_FOLDER_REPEAT = 1
+    PLAY_MODE_SINGLE_REPEAT = 2
+    PLAY_MODE_RANDOM = 3
     
     def __init__(self, pin_TX, pin_RX):
         self.uart = UART(1, 9600, tx=pin_TX, rx=pin_RX)
@@ -88,6 +101,29 @@ class Player:
         """
         self.cmd(0x16)
 
+    def equaliser(self, mode=None):
+        """
+        Set equaliser mode.
+        Use the EQ_* values in the class.
+        None queries the module for the current setting.
+        """
+        if mode is None:
+            return self.query(0x44)
+        else:
+            self.cmd(0x07, 0x00, mode)
+            return mode
+        
+    def playback_mode(self, mode=None):
+        """
+        Playback mode can be one of the modes from the PLAY_MODE_* constants.
+        None queries the module for the current setting.
+        """
+        if mode is None:
+            return self.query(0x45)
+        else:
+            self.cmd(0x08, 0x00, mode)
+            return mode
+        
     def fade(self, fade_ms=3000, to=0, reset=False):
         """
         Adjust the volume from the current level to 'to' value over fade_ms.
@@ -135,6 +171,17 @@ class Player:
     def loop_disable(self):
         self.cmd(0x19, 0x00, 0x01)
 
+    def is_playing(self):
+        """
+        Query the moduse for playback status.
+        It will return 1 if playing, 0 otherwise.
+        This function returns a boolean.
+        """
+        if query(0x42) == 1:
+            return True
+        else:
+            return False
+        
     # volume control
 
     def volume_up(self):
