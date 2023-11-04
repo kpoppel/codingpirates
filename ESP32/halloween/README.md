@@ -72,6 +72,8 @@ Så skal programmet skrives. Lige nu ser det ud sådan her:
 
 Så det gør ikke meget.  Vi vil gerne styre LEDen med vores nye program.  Så her er det ny program så:
 
+    // prg_1_LED_blink.c
+    //------------------
     // Include driver for gpio to control pin
     #include <driver/gpio.h>
     // Include FreeRTOS for delay
@@ -101,6 +103,56 @@ Så det gør ikke meget.  Vi vil gerne styre LEDen med vores nye program.  Så h
 
 
 # Registrering af knaptryk
+
+Vi skal bruge en knap eller to til at styre funktioner med.  Med to knapper kan vi måske lave et menusystem.
+
+Det første forsøg er bare at koble knappen på en GPIO og så se hvad der sker.
+Forbind den lille kontakt med to ben til GPIO06 på det ene ben og GND på det andet.
+
+Programmet skal nu tænde for LED når knappen trykkes, og slukke når den slippes.
+Det betyder at GPIO skal sættes op som "pull up" og som "input".  "pull up" betyder at vores MCU board sørger for at en lille modstand mellem GPIO-pin og forsyningen (3V3) aktiveres, så GPIO er "1" når der ikke sker noget.
+
+        // prg_2_LED_knap.c
+        //------------------
+        // Include driver for gpio to control pin
+        #include <driver/gpio.h>
+        // Include FreeRTOS for delay
+        #include <freertos/FreeRTOS.h>
+        #include <freertos/task.h>
+
+        #define LED_PIN 2    // LED connected to GPIO2
+        #define LED_BUTTON 6 // Button connected to GPIO6
+
+        void app_main() {
+            // Configure pin
+            gpio_reset_pin(LED_PIN);
+            gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+            // Configure pin (full configuration)
+            gpio_config_t io_conf;
+            io_conf.intr_type = GPIO_INTR_DISABLE;
+            io_conf.mode = GPIO_MODE_INPUT;
+            io_conf.pin_bit_mask = (1ULL << BUTTON_PIN);
+            io_conf.pull_down_en = 0;
+            io_conf.pull_up_en = 1;
+            gpio_config(&io_conf);
+
+            // Main loop
+            while(true) {
+                // Turn OFF LED
+                gpio_set_level(LED_PIN, 0);
+                // 500 ms delay
+                vTaskDelay(500 / portTICK_PERIOD_MS);
+
+                Turn ON LED
+                gpio_set_level(LED_PIN, 1);
+                // 500 ms delay
+                vTaskDelay(500 / portTICK_PERIOD_MS);
+            }
+        }
+
+
+
 
 https://github.com/craftmetrics/esp32-button
 gpio_set_direction(GPIO_NUM_33, GPIO_MODE_INPUT);
