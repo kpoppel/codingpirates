@@ -50,7 +50,7 @@ class Player:
                        0x00, para1, para2,
                        0xEF])
         self.uart.write(query)
-        #time.sleep_ms(200)
+        time.sleep_ms(200) # time to write data
 
     def query(self, command, para1=0, para2=0):
         """
@@ -66,6 +66,7 @@ class Player:
                 return -1
             if len(in_bytes)==10 and in_bytes[1]==255 and in_bytes[9]==239:
                 retry=False
+        time.sleep_ms(200) # time to read data
         return in_bytes[6]
     
     # playback
