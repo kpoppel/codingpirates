@@ -177,7 +177,7 @@ class Player:
         It will return 1 if playing, 0 otherwise.
         This function returns a boolean.
         """
-        if query(0x42) == 1:
+        if self.query(0x42) == 1:
             return True
         else:
             return False
