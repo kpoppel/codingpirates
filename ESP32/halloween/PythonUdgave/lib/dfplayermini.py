@@ -50,7 +50,7 @@ class Player:
                        0x00, para1, para2,
                        0xEF])
         self.uart.write(query)
-        time.sleep_ms(200)
+        #time.sleep_ms(200)
 
     def query(self, command, para1=0, para2=0):
         """
@@ -177,7 +177,7 @@ class Player:
         It will return 1 if playing, 0 otherwise.
         This function returns a boolean.
         """
-        if query(0x42) == 1:
+        if self.query(0x42) == 1:
             return True
         else:
             return False
