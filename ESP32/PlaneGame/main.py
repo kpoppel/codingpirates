@@ -31,6 +31,8 @@ class Sprite:
         self.x = 0
         self.y = 0
         self.collided = False
+        self.h = len(self.sprite)
+        self.w = len(self.sprite[0])
 
     def move_up(self, d=1):
         self.y += d
@@ -123,6 +125,9 @@ class Wall:
 
         
 class Game:
+    BACKGROUND_MUSIC_TRACK = 8
+    EXPLOSION_TRACK = 7
+    GET_READY_TRACK = 9
     def __init__(self, hal, sprites):
         self.hal = hal
         self.player = Sprite(hal.display, sprites.get('player'))
@@ -141,24 +146,38 @@ class Game:
         self.shot.goto(90,11)
         # Game stage
         self.speed=1
-        #self.hal.music.play(8)
+        self.hal.music.play(self.BACKGROUND_MUSIC_TRACK) # START SCREEN MUSIC?
+        self.get_ready_screen()
 
-    def game_over(self):
-        #self.hal.music.play(7)
+    def get_ready_screen(self):
+        self.hal.display.fill(0)
+        self.hal.display.text("GET READY!", int((128-8*10)/2),12, 1)
+        self.hal.display.text("(press button)", int((128-8*14)/2),24, 1)
+        self.hal.display.show()
+        while self.hal.button_1():
+            time.sleep_ms(250)
+        self.hal.music.play(self.GET_READY_TRACK)
+        time.sleep_ms(1000)
+        self.hal.display.fill(0)
+        self.hal.display.show()
+        self.hal.music.play(self.BACKGROUND_MUSIC_TRACK)
+ 
+    def game_over_screen(self):
+        self.hal.music.play(self.EXPLOSION_TRACK)
         for i in range(0,4):
             self.hal.display.fill((i+1)%2)
-            self.hal.display.text("You are dead!", 20,12, i%2)
+            self.hal.display.text("You are dead!", int((128-8*13)/2),12, i%2)
             self.hal.display.show()
             time.sleep_ms(500)
         self.hal.display.fill(0)
         self.hal.display.show()
         self.reset()
 
-    def game_win(self):
+    def game_win_screen(self):
         #self.hal.music.play(9)
         for i in range(0,4):
             self.hal.display.fill((i+1)%2)
-            self.hal.display.text("You win!", 20,12, i%2)
+            self.hal.display.text("You win!", int((128-8*8)/2),12, i%2)
             self.hal.display.show()
             time.sleep_ms(500)
         self.hal.display.fill(0)
@@ -169,6 +188,9 @@ class Game:
         if not self.hal.button_1():
             #print("Button_1")
             self.player.move_down()
+            # How far off screen can we fly? (1 pixel must be visible)
+            if self.player.y <= 1 - self.player.h:
+                self.player.move_up()
         if not self.hal.button_2():
             #print("Button_2")
             self.player.move_up()
@@ -206,10 +228,10 @@ class Game:
             
             # Collision check
             if self.player.collided == True:
-                self.game_over()
+                self.game_over_screen()
                 
             if self.player.x == 125:
-                self.game_win()
+                self.game_win_screen()
                 
             self.hal.display.show()
             self.control()
