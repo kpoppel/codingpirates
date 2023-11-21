@@ -92,5 +92,3 @@ while True:
         if remaining_time < 0:
             remaining_time = 0
         time.sleep_ms(250)
-
-        
