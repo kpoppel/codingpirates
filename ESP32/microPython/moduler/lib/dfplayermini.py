@@ -49,8 +49,9 @@ class Player:
         query = bytes([0x7E, 0xFF, 0x06, command,
                        0x00, para1, para2,
                        0xEF])
+        print(query)
         self.uart.write(query)
-        time.sleep_ms(200) # time to write data
+        time.sleep_ms(200)
 
     def query(self, command, para1=0, para2=0):
         """
@@ -66,32 +67,71 @@ class Player:
                 return -1
             if len(in_bytes)==10 and in_bytes[1]==255 and in_bytes[9]==239:
                 retry=False
-        time.sleep_ms(200) # time to read data
         return in_bytes[6]
     
     # playback
     def play(self, track_id=None):
-        """ Play a track.
-            track_id: If specified, play this track number (1-2999)
+        """ Play a track from the filesystem root or anywhere it seems.
+            track_id: integer [1, 3000]
             If not specified playback from last selected. After reset this is 0.
             Track 0 is the same as track 1.  A track number larger than the number
             of tracks on the SD card will play the last track.
-        """
+            Note: files must be named 0001something.mp3 or .wav
+            Note: play a track numbered larger than one in the root folder
+                  just picks the next one from the folders.
+            """
         if track_id is None:
+            # Just start play
             self.cmd(0x0D)
         elif isinstance(track_id, int):
+            # Play specific track based on name
             self.cmd(0x03, track_id >> 8, track_id & 0xFF)
     
+    def play_folder(self, folder_id, track_id):
+        """ Play file from a folder.
+            folder_id: integer [1, 99]
+            track_id: integer [1, 255]
+            Note: files must be named 01/001something.mp3 or .wav
+        """
+        self.cmd(0x0F, folder_id & 0xFF, track_id & 0xFF)
+
+    def play_large_folder(self, folder_id, track_id):
+        """ Play file from folders supporting 3000 tracks.
+            If using folders with upto 3000 tracks, only folder ids
+            from 01 to 15 are allowed: 4 bit folder id, 12 bit track id
+            folder_id: integer [1, 15]
+            track_id: integer [1, 3000]
+        """
+        self.cmd(0x14, (folder_id & 0xF << 4) + (track_id >> 8 & 0xF), track_id & 0xFF)
+
+    def play_mp3(self, track_id):
+        """ Play file from MP3 folder.
+            track_id: integer [1, 3000]
+            Note: files must be named MP3/0001something.mp3 or .wav
+        """
+        self.cmd(0x12, track_id >> 8, track_id & 0xFF)
+        
+    def play_advert(self, track_id):
+        """ Play file from ADVERT folder.
+            This will play the track in the middle of an already playing one
+            then return to the original playback.
+            track_id: integer [1, 3000]
+            Note: files must be named ADVERT/0001something.mp3 or .wav
+        """
+        self.cmd(0x13, track_id >> 8, track_id & 0xFF)
+        
     def play_next(self):
         """ Play next track
+            Not limited to root or stays within a folder
         """
         self.cmd(0x01)
         
     def play_prev(self):
-        """ Play previous track
+        """ Play previous track.
+            Not limited to root or stays within a folder
         """
         self.cmd(0x02)
-        
+    
     def pause(self):
         """ Pause playing
         """
@@ -175,14 +215,25 @@ class Player:
     def is_playing(self):
         """
         Query the moduse for playback status.
-        It will return 1 if playing, 0 otherwise.
+        It will return 1 if playing, 0 or 2 otherwise.
         This function returns a boolean.
         """
         if self.query(0x42) == 1:
             return True
         else:
             return False
-        
+
+    def is_paused(self):
+        """
+        Query the moduse for playback status.
+        It will return 2 if paused, 0 or 1 otherwise.
+        This function returns a boolean.
+        """
+        if self.query(0x42) == 2:
+            return True
+        else:
+            return False
+
     # volume control
 
     def volume_up(self):
@@ -219,6 +270,14 @@ class Player:
         self.cmd(0x0C)
         
     # file handling
-    
-    def filesinfolder(self):
-        return self.query(0x48)
+    def filesinfolder(self, folder_id=None):
+        if isinstance(folder_id, int):
+            # Query number of tracks in a specific folder
+            print("Sorry, filesin folder with folder name does not seem to return correct data.")
+            return self.query(0x4E, folder_id >> 8, folder_id & 0xFF)
+        else:
+            return self.query(0x48)
+
+    def folders(self):
+        """ Return the number of folders on device """
+        return self.query(0x4F)

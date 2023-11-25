@@ -10,8 +10,9 @@ class Screen:
         # internal variables
         self.lines = [["",True],["",True],["",True],["",True]] # 4 tekst linjer med scroll aktiv
         self.current_icon = "pirat"
+        self.extra_icons = ["speaker_small", "alarm_small", "playlist_small", "node_small"]
         # Hvor langt ude af x aksen på displayet skal tekst begynde
-        self.split = 40
+        self.split = 48
         # Load icons
         try:
             f = open(iconfilename)
@@ -24,13 +25,11 @@ class Screen:
         # Names are in order of insertion from Python 3.7+.
         self.icon_names = list(self.icons.keys())
     
-    def icon(self):
-        """ Render an icon.
-            Todo: Save some space by rendering to framebuffer on load
-        """
-        x_ofs = self.icons[self.current_icon][0]
-        y_ofs = self.icons[self.current_icon][1]
-        pixels = self.icons[self.current_icon][2]
+    def icon(self, icon):
+        """ Render an icon. """
+        x_ofs = self.icons[icon][0]
+        y_ofs = self.icons[icon][1]
+        pixels = self.icons[icon][2]
         for y, row in enumerate(pixels):
             for x, data in enumerate(row):
                 c = 1 if data=="1" else 0
@@ -53,7 +52,9 @@ class Screen:
             while True:
                 i = 0
                 self.display.fill(0) # clear skærm
-                self.icon() # indsæt icon pixels på skærm
+                self.icon(self.current_icon) # indsæt icon pixels på skærm
+                for icon in self.extra_icons:
+                    self.icon(icon)
                 
                 while i < len(self.lines): # For hver linje
                     # If the line is a scoll line and it is longer than the screen width
@@ -76,7 +77,6 @@ class Screen:
                 #Start forfra ved nyt valg
                 if self.lines != LinesBackup:
                     break
-                #time.sleep_ms(250)
 
     def start_update(self):
         # Start screen update thread
