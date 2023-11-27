@@ -4,10 +4,6 @@ from TrackManager import TrackManager
 from handle_screen import Screen
 import HAL
 
-# Constants
-ALARMS = [(24*60*60,"24h"),(1*60*60,"12h"),(1*60*60,"6h"),(1*60*60,"2h"),(1*60*60,"1h")]
-ONE_DAY = 30 # 24*60*60
-
 # Initialise modules
 hal = HAL.HAL()
 screen = Screen(hal.display, "icons.json")
@@ -15,7 +11,6 @@ player = TrackManager(hal.music, "sdcard.json")
 volume = hal.music.volume(1)
 
 # MP3 player state variables
-#tracks.select_playlist('mix')
 track_count= player.current_playlist_length
 (track_folder, track_number, track_name, remaining_time) = player.select_next_track()
 playlist_names = player.get_playlist_names()
@@ -24,7 +19,7 @@ start_time = 0
 is_playing = False
 
 # Hvis alarm_start_time er sat, spilles der musik på denne tid hver dag.
-alarm_hours = 24 # 0 til 24 timer (0 er slukket)
+alarm_hours = 0 # 0 til 24 timer (0 er slukket)
 alarm_start_time = 0
 alarm_track_folder = 0
 alarm_track_number = 0
