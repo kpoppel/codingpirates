@@ -4,10 +4,6 @@ from TrackManager import TrackManager
 from handle_screen import Screen
 import HAL
 
-# Constants
-ALARMS = [(24*60*60,"24h"),(1*60*60,"12h"),(1*60*60,"6h"),(1*60*60,"2h"),(1*60*60,"1h")]
-ONE_DAY = 30 # 24*60*60
-
 # Initialise modules
 hal = HAL.HAL()
 screen = Screen(hal.display, "icons.json")
@@ -15,16 +11,18 @@ player = TrackManager(hal.music, "sdcard.json")
 volume = hal.music.volume(1)
 
 # MP3 player state variables
-#tracks.select_playlist('mix')
-track_count= player.current_playlist_length
-(track_folder, track_number, track_name, remaining_time) = player.select_next_track()
+# Her ser vi hvordan man kan ignorere returnerede værdier:
+(_, _, _, remaining_time) = player.select_next_track()
+# Alternativt kunne man også bare kalde funktionen og så køre:
+#remaining_time = player.current_track_length
+
 playlist_names = player.get_playlist_names()
 playlist_index = playlist_names.index(player.current_playlist)
 start_time = 0
 is_playing = False
 
 # Hvis alarm_start_time er sat, spilles der musik på denne tid hver dag.
-alarm_hours = 24 # 0 til 24 timer (0 er slukket)
+alarm_hours = 0 # 0 til 24 timer (0 er slukket)
 alarm_start_time = 0
 alarm_track_folder = 0
 alarm_track_number = 0
@@ -39,7 +37,7 @@ while True:
     #Opdater liste til 4 linjer og scroll attribut på skærmen.
     # ["tekst på linje","True/False til om linjen må scrolles"]
     screen.lines=[
-            [track_name,True],
+            [player.current_track_name,True],
             [f"{player.current_playlist}/{player.current_track_folder}/{player.current_track_number}", True],
             [f"{remaining_time}s",False],
             [f"{volume}", False]
@@ -76,7 +74,7 @@ while True:
         
         # Select Song state
         if screen.current_icon == 'node':
-            (track_folder, track_number, track_name, remaining_time) = player.select_next_track()
+            (_, _, _, remaining_time) = player.select_next_track()
             time.sleep_ms(250)
         # Set volume state
         elif screen.current_icon == 'speaker':
@@ -115,7 +113,7 @@ while True:
         #print(f"Alarm elapsed {time.time()-alarm_start_time} >= {ONE_DAY}")
         alarm_start_time = time.time()
         player.select_playlist(alarm_playlist)
-        (track_folder, track_number, track_name, remaining_time) = player.select_track(alarm_track_folder, alarm_track_number)
+        (_, _, _, remaining_time) = player.select_track(alarm_track_folder, alarm_track_number)
         hal.music.volume(alarm_volume)
         start_time = time.time()
         player.play()
@@ -128,7 +126,7 @@ while True:
         if elapsed_time > player.current_track_length and not hal.music.is_playing():
             # Play next track when the current one is done and MP3 player is done too
             # (we could have wrong JSON data)
-            (track_folder, track_number, track_name, remaining_time) = player.select_next_track()
+            (_, _, _, remaining_time) = player.select_next_track()
             player.play()
         
             # Set new base time

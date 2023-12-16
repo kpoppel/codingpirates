@@ -49,7 +49,7 @@ class Player:
         query = bytes([0x7E, 0xFF, 0x06, command,
                        0x00, para1, para2,
                        0xEF])
-        print(query)
+        #print(query)
         self.uart.write(query)
         time.sleep_ms(200)
 
@@ -87,7 +87,7 @@ class Player:
             # Play specific track based on name
             self.cmd(0x03, track_id >> 8, track_id & 0xFF)
     
-    def play_folder(self, folder_id, track_id):
+    def play_folder(self, folder_id=None, track_id=None):
         """ Play file from a folder.
             folder_id: integer [1, 99]
             track_id: integer [1, 255]
@@ -95,7 +95,7 @@ class Player:
         """
         self.cmd(0x0F, folder_id & 0xFF, track_id & 0xFF)
 
-    def play_large_folder(self, folder_id, track_id):
+    def play_large_folder(self, folder_id=None, track_id=None):
         """ Play file from folders supporting 3000 tracks.
             If using folders with upto 3000 tracks, only folder ids
             from 01 to 15 are allowed: 4 bit folder id, 12 bit track id
