@@ -1,88 +1,116 @@
+## SDCARD setup:
+#   https://www.youtube.com/watch?v=rq5yPJbX_uk&t=446s
+
 from st7735 import TFT, TFTColor
 from sysfont import sysfont
 from machine import SPI,Pin
 import time
 import math
 import random
-#from PIL import Image
 
-## SDCARD setup:
-#   https://www.youtube.com/watch?v=rq5yPJbX_uk&t=446s
-
+# TFT initialisering
 spi = SPI(2, baudrate=33000000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(23), miso=None)
 tft=TFT(spi=spi, aDC=2, aReset=4, aCS=15)
 tft.initr()
 tft.rgb(True)
 tft.fill(TFT.BLACK)
 
-frameCount = 0
-r = 27
-g = 34
-b = 117
-rd = False
-gd = False
-bd = False
-def plasma_setup(w=128,h=160):
-    for x in range(0, w):
-        for y in range(0, h):
-            color = int(((128+(128*math.sin(x/32.0)))
-                +(128+(128*math.cos(y/32.0))) 
-                +(128+(128*math.sin(math.sqrt((x*x+y*y))/32.0))))/4)
-            tft.pixel(aPos=(x,y), aColor=color)
-            
+from framebuf import FrameBuffer, RGB565
+buf = bytearray(128*160*2)
+fb = FrameBuffer(buf, 128, 160, RGB565)
+palb = bytearray(128*160*2)
+pal = FrameBuffer(palb, 1,128,RGB565)
+
+def test_framebuffer(size=20, repeat=1000):
+    tft._setwindowloc((0,0),(127,159))
+
+    (xmax, ymax) = (128-size, 160-size)
+    (x, y) = (size, size)
+    (vx, vy) = (1, 1)
+
+    for n in range(repeat):
+        fb.fill(0)
+        fb.ellipse(x, y, size, size, 0xffff, True)
+        x += vx
+        if x == xmax or x == size:
+            vx = -vx
+        y += vy
+        if y == ymax or y == size:
+            vy = -vy
+        tft._writedata(buf)
+        
+test_framebuffer()
+
 def plasma(w=128,h=160):
-    global r, g, b, rd, gd, bd
-    if r > 128:
-        rd = True
-    if not rd:
-        r+=3
-    else:
-        r-=3
-    if r < 0:
-        rd = False
-    if g > 128:
-        gd = True
-    if not gd:
-        g+=3
-    else:
-        g-=3
-    if r < 0:
-        gd = False
-    if b > 128:
-        bd = True
-    if not bd:
-        b+=3
-    else:
-        b-=3
-    if (b < 0):
-        bd = False
-
-    pal = [0] * 128
-    for i in range(0, 128):
-        s_1 = math.sin(i*math.pi/25);
-        s_2 = math.sin(i*math.pi/50+math.pi/4);
-        pal[i] = TFTColor(int(r+s_1*128), int(g+s_2*128), int(b+s_1*128))
-
     for x in range(0, w):
         for y in range(0, h):
             color = int(((128+(128*math.sin(x/32.0)))
                 +(128+(128*math.cos(y/32.0))) 
                 +(128+(128*math.sin(math.sqrt((x*x+y*y))/32.0))))/4)
-#             color = TFTColor(int( 128+(128*math.sin(x/32.0) ) ),
-#                              int( 128+(128*math.cos(y/32.0))  ),
-#                              int( 128+(128*math.sin(math.sqrt(x*x+y*y)/32.0))/4 )
-#                              )
-            
-            tft.pixel(aPos=(x,y), aColor=(color+frameCount)&255)
+#            tft.pixel(aPos=(x,y), aColor=color)
+            fb.pixel(x, y, color&255)
+    tft._writedata(buf)
 
-#    for x in range(0, tft.size()[0]):
-#        for y in range(0, tft.size()[1]):
-#            tft.pixel(aPos=(x,y), aColor=pal[(buffer[i]+frameCount)&127])
-#plasma_setup(50,50)
-#while True:
-#    plasma(50,50)
-#    frameCount += 1
-#exit()
+    frameCount = 0
+    r = 27
+    g = 34
+    b = 117
+    rd = False
+    gd = False
+    bd = False
+    
+    while True:
+        if r > 128:
+            rd = True
+        if not rd:
+            r+=3
+        else:
+            r-=3
+        if r < 0:
+            rd = False
+        if g > 128:
+            gd = True
+        if not gd:
+            g+=3
+        else:
+            g-=3
+        if r < 0:
+            gd = False
+        if b > 128:
+            bd = True
+        if not bd:
+            b+=3
+        else:
+            b-=3
+        if (b < 0):
+            bd = False
+
+        #pal = [0] * 128
+        for i in range(0, 128):
+            s_1 = math.sin(i*math.pi/25);
+            s_2 = math.sin(i*math.pi/50+math.pi/4);
+#            pal[i] = TFTColor(int(r+s_1*128), int(g+s_2*128), int(b+s_1*128))
+            pal.pixel(i,0, TFTColor(int(r+s_1*128), int(g+s_2*128), int(b+s_1*128)))
+
+        for x in range(0, w):
+            for y in range(0, h):
+#                 color = int(((128+(128*math.sin(x/32.0)))
+#                     +(128+(128*math.cos(y/32.0))) 
+#                     +(128+(128*math.sin(math.sqrt((x*x+y*y))/32.0))))/4)
+    #             color = TFTColor(int( 128+(128*math.sin(x/32.0) ) ),
+    #                              int( 128+(128*math.cos(y/32.0))  ),
+    #                              int( 128+(128*math.sin(math.sqrt(x*x+y*y)/32.0))/4 )
+    #                              )
+                
+                #tft.pixel(aPos=(x,y), aColor=(color+frameCount)&255)
+#                fb.pixel(x, y, (color+frameCount)&255)
+                #fb.pixel(x, y, pal[x])
+                fb.blit(fb, x, y, -1, pal)
+
+        tft._writedata(buf)
+
+plasma()
+
 def all_colors():
     for r in range(0,256):
         for g in range(0,256):
