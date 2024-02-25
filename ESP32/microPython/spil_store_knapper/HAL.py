@@ -1,8 +1,7 @@
 import neopixel
-#import ssd1306
+import ssd1306
+from machine import Pin, SoftI2C
 #from dfplayermini import Player
-from machine import Pin
-#, SoftI2C
 
 # COPY ssd1306 and dfplayer mini to the ESP32 flash in addition to this file.
 
@@ -27,10 +26,9 @@ class HAL:
     LED_PIN = 0
 
     def __init__(self):
-#        self.music = Player(pin_TX=25, pin_RX=26)
-#        self.i2c = SoftI2C(Pin(22), Pin(21))
-#        self.display = ssd1306.SSD1306_I2C(128, 32, self.i2c)
-#        self.display.rotate(True) # screen rotation
+        self.i2c = SoftI2C(Pin(22), Pin(21))
+        self.display = ssd1306.SSD1306_I2C(128, 32, self.i2c)
+        self.display.rotate(True) # screen rotation
         self.NUM_PIXELS = 3 * len(self.BUTTON_GPIO)
         self.led = neopixel.NeoPixel(Pin(self.LED_PIN), self.NUM_PIXELS)
         # Buttons connected to GPIOs:
@@ -44,6 +42,7 @@ class HAL:
         self.button_board = []
         for gpio in self.BUTTON_GPIO_BOARD:
             self.button_board.append(Pin(gpio, Pin.IN, Pin.PULL_UP))
+#        self.music = Player(pin_TX=25, pin_RX=26)
 
         # TFT:
         # CS: 15
