@@ -43,7 +43,8 @@ class Sprite:
         
     def off_screen(self):
         #print((self.x == 0), (self.y == 0), (self.x == self.display.width-self.w), (self.y == self.display.height-self.h))
-        return (self.x == 0) or (self.y == 0) or (self.x == self.display.width-self.w) or (self.y == self.display.height-self.h)
+        return (self.x == 0) or (self.y == 0) or (self.x == self.display.width-self.w) or
+               (self.y == self.display.height-self.h)
     
     def draw(self):
         """ Render the sprite
