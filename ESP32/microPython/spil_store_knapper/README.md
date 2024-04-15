@@ -20,3 +20,11 @@ https://github.com/jyvet/pic2oled
 
 En mere letvægt ST7735 driver?
   https://github.com/antirez/ST77xx-pure-MP?tab=readme-ov-file
+  
+Skal der spares lidt hukommelse?
+http://bukys.eu/blog/230129_mpy-cross_the_ultimate_micropython_precompilation_tool._download_available
+Kør som:
+  mpy_cross -O3 <pythonfil>
+
+Hurtigere/mindre TFT driver:
+https://github.com/antirez/ST77xx-pure-MP?tab=readme-ov-file
