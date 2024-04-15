@@ -1,7 +1,8 @@
 # Første forsøg på et spil med knapper og det lille display
 import _thread
-import HAL
+from HAL import HAL
 from Sprite import Sprite
+import time
 
 class Game:
     def __init__(self, hal):
@@ -15,6 +16,8 @@ class Game:
         self.player_2.goto(60,12)
 
     def control(self):
+        # Koden skal udvides til at bruge de 8 3D-printede knapper
+        # Og så skjuler der sig en udfordring når spriten går off_screen...
         if not self.hal.button_board[0]():
             print("Button_1")
             # Hold Spriten på skærmen
@@ -31,6 +34,8 @@ class Game:
                 #self.player_2.move_down()
                 #self.player_2.move_left()
                 #self.player_2.move_right()
+
+""" 13, 16, 17, 19, 27, 34, 35, 39, 12 """
 
     def loop(self):
         while True:
@@ -53,6 +58,6 @@ class Game:
         _thread.start_new_thread(self.loop, ())
 
 ###
-hal = HAL.HAL()
+hal = HAL()
 game = Game(hal)
-game.loop()
+game.run()

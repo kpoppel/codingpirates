@@ -10,7 +10,9 @@ import random
 
 # TFT initialisering
 spi = SPI(2, baudrate=33000000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(23), miso=None)
+print(spi)
 tft=TFT(spi=spi, aDC=2, aReset=4, aCS=15)
+#tft=TFT(spi=spi, aDC=2, aReset=4, aCS=5)
 tft.initr()
 tft.rgb(True)
 tft.fill(TFT.BLACK)
@@ -18,7 +20,7 @@ tft.fill(TFT.BLACK)
 from framebuf import FrameBuffer, RGB565
 buf = bytearray(128*160*2)
 fb = FrameBuffer(buf, 128, 160, RGB565)
-palb = bytearray(128*160*2)
+palb = bytearray(128*1*2)
 pal = FrameBuffer(palb, 1,128,RGB565)
 
 def test_framebuffer(size=20, repeat=1000):
@@ -30,7 +32,8 @@ def test_framebuffer(size=20, repeat=1000):
 
     for n in range(repeat):
         fb.fill(0)
-        fb.ellipse(x, y, size, size, 0xffff, True)
+        fb.ellipse(x, y, size, size, TFTColor(0xff, 0xff, 0xff), True)
+#        fb.ellipse(x, y, size, size, 0xffff, True)
         x += vx
         if x == xmax or x == size:
             vx = -vx
@@ -38,8 +41,9 @@ def test_framebuffer(size=20, repeat=1000):
         if y == ymax or y == size:
             vy = -vy
         tft._writedata(buf)
-        
-test_framebuffer()
+
+while True:
+    test_framebuffer()
 
 def plasma(w=128,h=160):
     for x in range(0, w):

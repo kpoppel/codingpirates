@@ -1,4 +1,4 @@
-import HAL
+from HAL import HAL
 from Sprite import Sprite
 
 class Game:
@@ -19,6 +19,6 @@ class Game:
             self.hal.display.show()
 
 
-hal = HAL.HAL()
+hal = HAL()
 game = Game(hal)
 game.loop()

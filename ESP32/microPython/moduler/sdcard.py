@@ -26,3 +26,9 @@ os.chdir("/sd")
 print(os.getcwd())
 print(os.listdir())
 print(os.statvfs('/'))
+
+# Output from the program:
+# /
+# ['sd', 'boot.py', 'lib']
+# /sd
+# ['System Volume Information', 'Hej_ESP32.txt']

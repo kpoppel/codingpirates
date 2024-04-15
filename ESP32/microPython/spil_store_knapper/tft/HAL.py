@@ -1,6 +1,10 @@
 import neopixel
 import ssd1306
 from machine import Pin, SoftI2C
+
+from st7735 import TFT, TFTColor
+from sysfont import sysfont
+from machine import SPI,Pin
 #from dfplayermini import Player
 
 # COPY ssd1306 and dfplayer mini to the ESP32 flash in addition to this file.
@@ -24,14 +28,13 @@ class HAL:
     BUTTON_GPIO = [5, 13, 16, 17, 19 ,27 ,39, 35]
     BUTTON_GPIO_BOARD = [32, 33]
     LED_PIN = 0
+    SCREEN_WIDTH = 160
+    SCREEN_HEIGHT = 128
     
-    #Large display ports
-    # 23,18,5,4,2 
-
     def __init__(self):
-        self.i2c = SoftI2C(Pin(22), Pin(21))
-        self.display = ssd1306.SSD1306_I2C(128, 32, self.i2c)
-        self.display.rotate(True) # screen rotation
+        #self.i2c = SoftI2C(Pin(22), Pin(21))
+        #self.display = ssd1306.SSD1306_I2C(128, 32, self.i2c)
+        #self.display.rotate(True) # screen rotation
         self.NUM_PIXELS = 3 * len(self.BUTTON_GPIO)
         self.led = neopixel.NeoPixel(Pin(self.LED_PIN), self.NUM_PIXELS)
         # Buttons connected to GPIOs:
@@ -41,22 +44,37 @@ class HAL:
         #                    9, 10
         self.button = []
         for gpio in self.BUTTON_GPIO:
-            #self.button.append(Pin(gpio, Pin.IN, Pin.PULL_UP))
-            self.button.append(Pin(gpio, Pin.IN))
+            self.button.append(Pin(gpio, Pin.IN, Pin.PULL_UP))
         self.button_board = []
         for gpio in self.BUTTON_GPIO_BOARD:
             #self.button_board.append(Pin(gpio, Pin.IN))
             self.button_board.append(Pin(gpio, Pin.IN, Pin.PULL_UP))
 #        self.music = Player(pin_TX=25, pin_RX=26)
 
-        # TFT:
+        # Initialise TFT display ST7735
         # CS: 15
         # RST: 4
         # AO:  2
         # SDA: 23
         # SCK: 18
-        #spi = SPI(2, baudrate=33000000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(23), miso=None)
-        #tft=TFT(spi=spi, aDC=2, aReset=4, aCS=15)
-        #tft.initr()
-        #tft.rgb(True)
-        
+        #
+        # Rotation set so pins are on the right and screen width is the largest dimension (160 px)
+        # Y is 0 at the top, and 127 at the bottom.
+        spi = SPI(2, baudrate=33000000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(23), miso=None)
+        self.tft=TFT(spi=spi, aDC=2, aReset=4, aCS=15)
+        self.tft.initr()
+        self.tft.rgb(True)
+        self.tft.rotation(3)
+        self.tft.fill(TFT.BLACK)
+        self.tft._setwindowloc((0,0),(self.SCREEN_WIDTH-1,self.SCREEN_HEIGHT-1))
+
+        # Add a framebuffer to draw into
+        from framebuf import FrameBuffer, RGB565
+        buf = bytearray(self.SCREEN_WIDTH*self.SCREEN_HEIGHT*2)
+        self.framebuffer = FrameBuffer(buf, self.SCREEN_WIDTH, self.SCREEN_HEIGHT, RGB565)
+
+    def show(self):
+        # Dump the framebuffer to the screen.
+        self.tft._writedata(self.framebuffer)
+
+
