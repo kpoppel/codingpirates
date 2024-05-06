@@ -14,7 +14,7 @@ debugger/REPL ikke kan nå at køre hvis programmet kopieres fra Thonny. Brug ct
 
 Billeder/sprites skal konverteres til bytearrays med 8bit RGB farver inden de kan bruges.
 Design en sprite med: https://www.pixilart.com/draw#
-Konverter den til hex med:
+Konverter den til hex med: convert_to_rgb565 python program.
 
 https://github.com/jyvet/pic2oled
 

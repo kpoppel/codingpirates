@@ -5,7 +5,7 @@
 # Tools -> Manage packages
 # Search for "Pillow", install in Local Python.
 #
-# Put all PNGs in the same dorectory and run the program.
+# Put all PNGs in the same directory and run the program.
 #
 import os, sys, pathlib
 from PIL import Image
