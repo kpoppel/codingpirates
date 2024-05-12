@@ -1,0 +1,12 @@
+{
+   "use": "STA",
+   "AP": {
+          "ssid": "ESP32_config",
+          "password": ""
+        },
+   "STA": {
+          "ssid": "",
+          "password": ""
+        }
+}
+
