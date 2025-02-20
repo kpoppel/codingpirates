@@ -7,21 +7,30 @@ class Wifi:
     
     def __init__(self, credentials=None):
         if credentials != None:
-            print("Setting up as WiFi client")
+            print("Setting up using supplied configuration")
             f = open(credentials)
             self._credentials = json.load(f)
-            print(self._credentials)
+        else:
+            print("Setting up as default WiFi access point")
+            self._credentials = {
+                    "ssid": self._AP_SSID,
+                    "password": self._AP_PASS,
+                    "access_point": True
+                }
+        print(self._credentials)
+        # Setup for client or access point
+        if self._credentials["access_point"] == False:
+            print("Setting up as WiFi client")
             self.start_client()
         else:
-            print("Seting up as WiFi access point")
+            print("Setting up as WiFi access point")
             self.start_access_point()
-        pass
     
     def start_access_point(self):
         """ Start an open access point """
         AP = network.WLAN(network.AP_IF)
         AP.active(True)
-        AP.config(essid=self._AP_SSID, password=self._AP_PASS, authmode=0)
+        AP.config(essid=self._credentials['ssid'], password=self._credentials['password'], authmode=0)
         print('Connection successful')
         print(AP.ifconfig())
     

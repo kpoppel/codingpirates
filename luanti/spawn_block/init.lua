@@ -1,126 +1,98 @@
-core.register_on_joinplayer(function(player)
+-- Player spawning.
+-- If a new player joins place a block under the player if there is air in that space.
+-- If a player joins again, just place the player on the block.
+local function on_spawn(player, is_newplayer)
     local name = player:get_player_name()
+    --if core.get_node({x=0, y=-1, z=0}).name == "air" then
     core.set_node({x=0, y=-1, z=0}, {name= "default:dirt"})
+    --end
+    if is_newplayer then
+        core.chat_send_player(name, "Welcome to oneblock!  Don't fall down!")
+    end
     player:set_pos({x=0, y=0, z=0})
+end
+
+core.register_on_newplayer(function(player)
+    on_spawn(player, true)
 end)
 
+core.register_on_joinplayer(function(player)
+    on_spawn(player, false)
+end)
+
+-- Ensure that if a player aflls off the platform it is respawned.
+local function get_all_player_names()
+    local players = core.get_connected_players()
+    local player_names = {}
+    for _, player in ipairs(players) do
+        table.insert(player_names, player:get_player_name())
+    end
+    return player_names
+end
+
+local function check_player_position()
+    local player_names = get_all_player_names()
+    for _, name in ipairs(player_names) do
+        local player = core.get_player_by_name(name)
+        if player then
+            local pos = player:get_pos()
+            if pos.y < -100 then
+                core.chat_send_player(name, "OH NO, you fell off the world!!")
+--                player:set_pos({x=0, y=0, z=0})
+                on_spawn(player, false)
+            end
+        end
+    end
+end
+
+local timer = 0
+core.register_globalstep(function(dtime)
+    timer = timer + dtime
+    if timer >= 1 then
+        check_player_position()
+        timer = 0
+    end
+end)
+
+-- Randomly change the block under the player when dug.
 local block_list = {
     "default:dirt",
     "default:stone",
     "default:dirt_with_grass",
-    "default:tree"
+    "default:tree",
+    "default:leaves",
+    --"tnt:tnt_burning",
+    --"default:lava_source"
 }
 
--- local function random_elem(tb)
---     local keys = {}
---     for k in pairs(tb) do table.insert(keys, k) end
---     return tb[keys[math.random(#keys)]]
--- end
+local entity_list = {
+    "bucket:bucket_empty",
+    --"tnt:tnt"
+}
+
 
 core.register_on_dignode(function(pos, oldnode, digger)
     --local node = random_elem(core.registered_nodes)
-    local node = block_list[math.random(1,#block_list)]
-    core.set_node({x=0, y=-1, z=0}, {name= node}) -- .name})
+    if core.get_node({x=0, y=-1, z=0}).name == "air" then
+        local node = block_list[math.random(1,#block_list)]
+        core.set_node({x=0, y=-1, z=0}, {name= node}) -- .name})
+        if math.random(1,100) > 90 then
+            entity = entity_list[math.random(1,#entity_list)]
+            core.add_item({x=0, y=0, z=0}, entity)
+        end
+    end
 end)
 
 
 
 
+-- * `core.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv))`
+-- * Called when `player` crafts something
+-- * `itemstack` is the output
+-- * `old_craft_grid` contains the recipe (Note: the one in the inventory is
+--   cleared).
+-- * `craft_inv` is the inventory with the crafting grid
+-- * Return either an `ItemStack`, to replace the output, or `nil`, to not
+--   modify it.
+--     allowed_items = 8
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- local S, PS = core.get_translator("hello")
-
--- -- on player spawn
--- core.register_on_joinplayer(function(player)
---     local name = player:get_player_name()
---     core.chat_send_player(name, S("Hello @1, how are you today?", name))
---     core.set_node({x=0, y=-1, z=0}, {name= "default:dirt"})
---     player:set_pos({x=0, y=0, z=0})
--- end)
-
--- core.register_chatcommand("playtime", {
---     func = function(name)
---         local last_login = core.get_auth_handler().get_auth(name).last_login
---         local playtime = math.floor((last_login-os.time())/60)
---         return true, PS(
---             "You have been playing for @1 minute.",
---             "You have been playing for @1 minutes.",
---             minutes, tostring(minutes))
---     end,
--- })
-
--- minetest.register_on_newplayer(function(player)
--- 	on_spawn(player, true)
--- end)
-
--- minetest.register_on_respawnplayer(function(player)
--- 	return on_spawn(player, false)
--- end)
-
--- -- Register a function to be called after the world is generated
--- core.register_on_worldgen_done(function()
---     -- Get the player's initial spawn position.  This is a bit tricky,
---     -- as the player hasn't *actually* spawned yet.  We have to get
---     -- it from the world generation settings.
---     local spawn_pos = core.settings:get_pos("spawn_point")
-
---     -- Check if a spawn point is defined. If not, default to 0,0,0
---     if spawn_pos == nil then
---         spawn_pos = {x=0, y=0, z=0}
---     end
-
---     -- Calculate the position of the block *below* the spawn point.
---     local block_pos = {x = spawn_pos.x, y = spawn_pos.y - 1, z = spawn_pos.z}
-
---     -- Check if there is already a node there. If so, don't do anything.
---     if core.get_node(block_pos).name == "air" then
---         -- Set the node to whatever block you want.  "default:dirt" is a good
---         -- choice, but you could use anything.
---         core.set_node(block_pos, {name = "default:dirt"})
---     end
-
-
---     -- Optional:  Add a message to the server log to confirm the block placement.
---     core.log("action", "Placed support block at " .. core.pos_to_string(block_pos))
-
--- end)
-
-
--- -- Optional: A chat command to reset the spawn point.  Useful for testing.
--- core.register_chatcommand("/resetspawn", {
---     func = function(name, param)
---         local pos = core.string_to_pos(param)
---         if pos then
---             core.settings:set("spawn_point", pos)
---             core.chat_send_all("Spawn point set to " .. param)
---         else
---             core.chat_send_player(name, "Usage: /resetspawn x,y,z")
---         end
---     end
--- })
