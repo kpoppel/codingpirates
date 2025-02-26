@@ -12,34 +12,34 @@ progression.block_list = {
 
     -- block level 2 - after wood pickaxe
     "default:stone",
-    --"default:leaves",
+    "default:leaves",
 
     -- block level 3 - after stone pickaxe
-    -- "bronze",
-    -- "tin",
-    -- "papyrus",
-    -- "sand",
-    -- "gravel",
-    -- "jungle tree"
+    "default:stone_with_coal",
+    "default:stone_with_copper",
+    "default:stone_with_tin",
+    "default:sand",
+    "default:gravel",
+    "default:jungletree",
 
     -- block level 4 - after bronze pickaxe
-    -- "iron",
-    -- "coal",
-    -- "cactus",
-    -- "clay" -- uselsss
+    "default:stone_with_iron",
+    "default:cactus",
+    "default:clay",
+    
     -- block level 5 - after steel pickaxe
-    -- "mese",
-    -- "bones"
-    -- "gold",
-    -- block level 6 - after mese pickaxe
+    "default:stone_with_mese",
+    "default:stone_with_gold",
 
-    -- "diamond"
+    -- block level 6 - after mese pickaxe
+    "default:stone_with_diamond"
+    
     -- block level 7 - after diamond pickaxe
 }
 
 progression.entity_list = {
     -- tree sapling
-    "bucket:bucket_empty",
+    "bucket:bucket_water",
     --"tnt:tnt"
     -- flowers, 
     --"snow"

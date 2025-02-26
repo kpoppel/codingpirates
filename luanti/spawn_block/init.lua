@@ -1,6 +1,8 @@
 local modname = core.get_current_modname()
 local modpath = core.get_modpath(modname)
+dofile(modpath .. DIR_DELIM .. "db.lua")
 dofile(modpath .. DIR_DELIM .. "player_spawn.lua")
+dofile(modpath .. DIR_DELIM .. "balance.lua")
 local progression = dofile(modpath .. DIR_DELIM .. "progression.lua")
 
 -- One_block game.
@@ -43,15 +45,32 @@ core.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
 
     -- Here select what the player is allowed to get in the one-block.
     local player_name = player:get_player_name()
-    
+
     if itemstack:get_name() == "default:pick_wood" then
-        allowed_block_level = 5
+
     elseif itemstack:get_name() == "default:pick_stone" then
-        allowed_block_level = #progression.block_list
+        allowed_block_level = math.max(allowed_block_level,11)
+        allowed_entity_level = #progression.entity_list
+    elseif itemstack:get_name() == "default:pick_bronze" then
+        allowed_block_level = math.max(allowed_block_level,14)
+        allowed_entity_level = #progression.entity_list
+    elseif itemstack:get_name() == "default:pick_steel" then
+        allowed_block_level = math.max(allowed_block_level,16)
+        allowed_entity_level = #progression.entity_list
+    elseif itemstack:get_name() == "default:pick_mese" then
+        allowed_block_level = math.max(allowed_block_level,17)
         allowed_entity_level = #progression.entity_list
     end
     player:set_attribute("allowed_block_level", allowed_block_level)
-    player:set_attribute("allowed_entity_level", allowed_entity_level)  
+    player:set_attribute("allowed_entity_level", allowed_entity_level)
     return nil
 end)
 
+
+--Bucket melting
+--core.register_craft({
+--    output = "default:bronze_ingot 2",
+--    type = "cooking",
+--    recipe = "default:tree 2",
+--    cooktime = 5
+--})
