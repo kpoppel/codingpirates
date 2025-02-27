@@ -17,6 +17,20 @@ core.register_on_newplayer(function(player)
 end)
 
 core.register_on_joinplayer(function(player)
+    -- Load the allowed_block_level from the player's metadata
+    local player_name = player:get_player_name()
+    local saved_block_level = player:get_attribute("allowed_block_level")
+    local saved_entity_level = player:get_attribute("allowed_entity_level")
+
+    if saved_block_level then
+        allowed_block_level = tonumber(saved_block_level)
+    end
+
+    if saved_entity_level then
+        allowed_entity_level = tonumber(saved_entity_level)
+    end
+
+    -- Then do the spawn
     on_spawn(player, false)
 end)
 

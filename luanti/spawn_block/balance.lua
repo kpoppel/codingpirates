@@ -1,4 +1,10 @@
-local function list_check(p1, p2)
+-- First version of the balance theme: creating idols in the world with certain
+-- surroundings is a sign of harmony with the environment.
+-- The first version is a simple implementation of the wood idol.
+-- The player must construct a wooden idol in the forest by placing a tree block in the crafting grid.
+
+local function check_pos(p1, p2)
+    -- Utility function to compare two positions, one {x=,y=,z=} and the other {x,y,z}
     return p1.x == p2[1] and p1.y == p2[2] and p1.z == p2[3]
 end
 
@@ -11,17 +17,19 @@ core.register_node("oneblock:idol_wood", {
     },
 
     on_punch = function (pos, node, puncher, pointed_thing)
-        if list_check(pos, {0,0,0}) then
+        if check_pos(pos, {0,0,0}) then
             local nodes = core.find_nodes_in_area({x=-10,y=-10,z=-10}, {x=10,y=10,z=10}, {"default:tree","default:leaves"}, true)
-            --core.chat_send_all("Found " .. #nodes["default:tree"] .. " trees")
             if nodes["default:tree"] and nodes["default:leaves"] then
                 if #nodes["default:tree"] >= 8 and #nodes["default:leaves"] >= 60 then
                     core.chat_send_all("You did it!")
                     allowed_block_level = math.max(allowed_block_level,5)
-                    local placement_list = {{x=pos.x+1,y=pos.y+1,z=pos.z+1},{x=pos.x+1,y=pos.y+1,z=pos.z},{x=pos.x+1,y=pos.y+1,z=pos.z-1},{x=pos.x,y=pos.y+1,z=pos.z+1},{x=pos.x,y=pos.y+1,z=pos.z-1},{x=pos.x-1,y=pos.y+1,z=pos.z+1},{x=pos.x-1,y=pos.y+1,z=pos.z},{x=pos.x-1,y=pos.y+1,z=pos.z-1}}
+                    local placement_list = {{x= 1, y=1,z= 1}, {x= 1,y=1,z= 0},
+                                            {x= 1, y=1,z=-1}, {x= 0,y=1,z= 1},
+                                            {x= 0, y=1,z=-1}, {x=-1,y=1,z= 1},
+                                            {x=-1, y=1,z= 0}, {x=-1,y=1,z=-1}}
 
-                    for i=1, #placement_list do
-                        core.set_node(placement_list[i], {name= SList.bug[math.random(1,4)]})
+                    for _, p in pairs(placement_list) do
+                        core.set_node({x=pos.x+p.x, x=pos.y+p.y, x=pos.z+p.z}, {name= SList.bug[math.random(1,4)]})
                     end
                     core.add_item({x=pos.x,y=pos.y+20,z=pos.z}, SList.sapling[math.random(1,9)])
                 end

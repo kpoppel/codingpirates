@@ -44,7 +44,6 @@ local Progression = {
     allowed_block_level = 3,
     allowed_entity_level = 0,
 
-    -- Game mode: Craft the right item
     check_progress = function(self, itemstack, player)
         -- Check player level and crafting level
          -- Load the allowed_block_level from the player's metadata
@@ -78,35 +77,6 @@ local Progression = {
         end
         player:set_attribute("allowed_block_level", self.allowed_block_level)
         player:set_attribute("allowed_entity_level", self.allowed_entity_level)
-    end,
-
-    -- Game mode "number of blocks" - update player level based on number of blocks dug
-    blocks_dug = 0,
-    check_progress_v2 = function(self, player)
-        local player_blocks_dug = player:get_attribute("blocks_dug")
-
-        if player_blocks_dug then
-            self.blocks_dug = math.max(self.blocks_dug, tonumber(player_blocks_dug))
-        end
-        self.blocks_dug = self.blocks_dug + 1
-        
-        if self.blocks_dug > 100 then
-            self.allowed_block_level = math.max(self.allowed_block_level,5)
-            self.allowed_entity_level = 0
-        elseif self.blocks_dug > 200 then
-            self.allowed_block_level = math.max(self.allowed_block_level,11)
-            self.allowed_entity_level = 0
-        elseif self.blocks_dug > 300 then
-            self.allowed_block_level = math.max(self.allowed_block_level,14)
-            self.allowed_entity_level = 0
-        elseif self.blocks_dug > 400 then
-            self.allowed_block_level = math.max(self.allowed_block_level,16)
-            self.allowed_entity_level = #self.entity_list
-        elseif self.blocks_dug > 500 then
-            self.allowed_block_level = math.max(self.allowed_block_level,17)
-            self.allowed_entity_level = #self.entity_list
-        end
-        player:set_attribute("blocks_dug", self.blocks_dug)
     end,
 
     get_node = function(self)

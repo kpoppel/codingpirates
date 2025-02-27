@@ -1,14 +1,18 @@
 -- Player spawning.
 -- If a new player joins place a block under the player if there is air in that space.
 -- If a player joins again, just place the player on the block.
+
+local progression = ...
+
 local function on_spawn(player, is_newplayer)
     local name = player:get_player_name()
-    --if core.get_node({x=0, y=-1, z=0}).name == "air" then
-    core.set_node({x=0, y=-1, z=0}, {name= "default:dirt"})
-    --end
+    if core.get_node({x=0, y=-1, z=0}).name == "air" then
+        core.set_node({x=0, y=-1, z=0}, {name= "default:dirt"})
+    end
     if is_newplayer then
         core.chat_send_player(name, "Welcome to oneblock!  Don't fall down!")
     end
+    progression:set_level(player)
     player:set_pos({x=0, y=0, z=0})
 end
 

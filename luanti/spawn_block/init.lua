@@ -1,35 +1,43 @@
 local modname = core.get_current_modname()
 local modpath = core.get_modpath(modname)
 dofile(modpath .. DIR_DELIM .. "db.lua")
-dofile(modpath .. DIR_DELIM .. "player_spawn.lua")
 dofile(modpath .. DIR_DELIM .. "balance.lua")
 local progression = dofile(modpath .. DIR_DELIM .. "progression.lua")
+dofile(modpath .. DIR_DELIM .. "player_spawn.lua")
 
 -- One_block game.
 --   Initially the player will have access to only a few different blocks, like
 --   dirt, and wood.
---   Once the player has constructed a wood pickaxe, they will have access to
---   more blocks, like stone.
---   Similarly as the game progresses certain entities will be made available to
---   the player.  This could be a bucket with water and lave to enable creating a
---   stone factory.
+--   To progress the player must construct an idol and place it in the world.
+--   A few idols needs to be constructed:
+--    wood idol in the forest
+--      punch the tree idol to get saplings and water
+--    stone idol in a circle of stone close to an water source
+--      punch the stone idol to get stone and lava
+--    iron idol in a circle of iron blocks
+--      punch the iron idol to get iron and coal
+--    gold idol in a circle of gold blocks
+--
+--   As the game progresses certain entities will be made available to
+--   the player when punching the various idols.  This could be a bucket with water
+--   and lava to enable creating a stone factory or materials.
 
 -- When the player digs the first block it returns itself and replaces it with a
 -- randomly chosen block from the list of blocks available to the player at that time.
-allowed_block_level = 3
-allowed_entity_level = 0
 core.register_on_dignode(function(pos, oldnode, digger)
     if core.get_node({x=0, y=-1, z=0}).name == "air" then
+        -- Game mode "number of blocks": Update world data and check if the player has progressed
+        -- progression:check_progress_v2(digger)
+        -- player_name = digger:get_player_name()
+        -- core.chat_send_all(player_name .. " has dug " .. progression.blocks_dug .. " blocks")
+
         -- Add a random block to the world
-        local node = progression.block_list[math.random(1,allowed_block_level)]
-        core.set_node({x=0, y=-1, z=0}, {name= node})
+        core.set_node({x=0, y=-1, z=0}, {name=progression:get_node()})
 
         -- Add a random entity to the block
-        if allowed_entity_level > 0 then
-            if math.random(1,100) > 90 then
-                entity = progression.entity_list[math.random(1,allowed_entity_level)]
-                core.add_item({x=0, y=0, z=0}, entity)
-            end
+        local entity = progression:get_entity()
+        if entity then
+            core.add_item({x=0, y=0, z=0}, entity)
         end
     end
 end)
@@ -43,34 +51,7 @@ core.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
     -- Return either an `ItemStack`, to replace the output, or `nil`, to not
     -- modify it.
 
-    -- Here select what the player is allowed to get in the one-block.
-    local player_name = player:get_player_name()
-
-    if itemstack:get_name() == "default:pick_wood" then
-
-    elseif itemstack:get_name() == "default:pick_stone" then
-        allowed_block_level = math.max(allowed_block_level,11)
-        allowed_entity_level = #progression.entity_list
-    elseif itemstack:get_name() == "default:pick_bronze" then
-        allowed_block_level = math.max(allowed_block_level,14)
-        allowed_entity_level = #progression.entity_list
-    elseif itemstack:get_name() == "default:pick_steel" then
-        allowed_block_level = math.max(allowed_block_level,16)
-        allowed_entity_level = #progression.entity_list
-    elseif itemstack:get_name() == "default:pick_mese" then
-        allowed_block_level = math.max(allowed_block_level,17)
-        allowed_entity_level = #progression.entity_list
-    end
-    player:set_attribute("allowed_block_level", allowed_block_level)
-    player:set_attribute("allowed_entity_level", allowed_entity_level)
+    -- Game mode: Craft the right item. Here select what the player is allowed to get in the one-block.
+    progression:check_progress(itemstack, player)
     return nil
 end)
-
-
---Bucket melting
---core.register_craft({
---    output = "default:bronze_ingot 2",
---    type = "cooking",
---    recipe = "default:tree 2",
---    cooktime = 5
---})

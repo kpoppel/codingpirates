@@ -156,12 +156,12 @@ SList = {
         "default:sandstone", --Sandstone
         "default:silver_sandstone", --Silver sandstone
 
-        --Obsidian
-        "default:obsidian", --Obsidian
-
         --Stone
         "default:desert_stone", --Desert stone
         "default:stone", --Stone
+
+        --Obsidian
+        "default:obsidian", --Obsidian
     },
 
     wood = {
