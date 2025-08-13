@@ -13,4 +13,5 @@ local function sumOfNumbers(a, b)
 end
 -- Bemærk at "a" og "b" i funktionen ikke er de samme "a" og "b" som uden for funktionen, da de tager prioritet.
 -- Når vi vil bruge funktionen kalder vi den som følgende, i det her tilfælde giver den en værdi, og vi printer den til konsollen:
-print(sumOfNumbers(1,2))
+print(sumOfNumbers(1,2)) -- Output: 5 //(1+2 + 1*2)
+-- "a" og "b" i funktionen hedder parametre, og det er en god måde at sende værdier ind i funktionen, så den ikke ændrer nogle variable
