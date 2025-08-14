@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name=" viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 LED</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="functions.js"></script>
+    <script src="jscolor.min.js"></script>
+</head>
+<body>
+<h1>ESP32 WEB SERVER</h1>
+<p>
+    <a class="button" onclick="setColor('ff')">ON</a>
+    <a class="button" onclick="setColor('00')">OFF</a>
+</p>
+<p>
+	<a class="button" onclick="setColor('96')">Medium</a>
+    <a class="button" onclick="setColor('32')">Low</a>
+</p>
+
+	<a class="button" href="/?led=rainbow">RAINBOW</a>
+	<a class="button" href="/?led=vumeter">VUmeter</a>
+<p>
+    <input class="jscolor" value="ff0000" id="rgb-picker"/>
+    <a class="button" onclick="setColor()">Set</a>
+</p>
+
+
+<br>
+</body>
+</html>

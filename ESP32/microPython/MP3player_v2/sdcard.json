@@ -1,0 +1,40 @@
+{
+  "tracks": [
+             [2,1,"Girl scream", 2],
+             [2,2,"Zombie moans", 15],
+             [2,3,"Boo and laugh", 3],
+             [2,4,"Welcome laugh", 6],
+             [2,5,"Evil Laughing", 9],
+             [3,1,"Adventure Travel", 80],
+             [3,3,"Get Ready!", 3],
+             [2,6,"Monster Laugh", 10],
+             [3,2,"Cinematic Boom", 5],
+             [1,1,"Nu er det jul", 200],
+             [1,2,"Sangen om Luffe (1)", 137],
+             [1,3,"Vi er Nissebanden", 145],
+             [1,4,"Hundeslaedesang", 179],
+             [1,5,"Isbjerge", 221],
+             [1,6,"Nordlys", 112],
+             [1,7,"Sangen om Luffe (2)", 89],
+             [1,8,"Risengroedssang", 128],
+             [1,9,"Fiffig Joergensen", 107],
+             [1,10,"Legetoejsmaskinesang", 127],
+             [1,11,"Ballonsang", 172],
+             [1,12,"Risengroedsrap", 202],
+             [1,13,"Polarnat", 128],
+             [0,1,"Rehab", 100],
+             [0,2,"You know I'm no good", 100],
+             [0,3,"Me & Mr. Jones", 100],
+             [100,1,"Please Please Please", 100],
+             [100,2,"Good Good Lovin'", 100],
+             [100,3,"shout and Shimmy", 100],
+             [200,1,"ADV:Get Ready", 100],
+             [200,2,"ADV:Welcome Laugh", 100]
+            ],
+  "playlists": {
+    "jul": 1,
+    "halloween": [[2,4],[2,2],[2,3],[2,1],[2,5],[2,6]],
+    "mix": [[0,3],[100,3],[0,1],[100,2],[0,2],[100,1]]
+  }
+}
+
