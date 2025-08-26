@@ -30,6 +30,7 @@ for index, value in ipairs(A) do
 end
 -- Man kan også bruge 'table.concat()':
 print(table.concat(A, ", ")) -- banana, apple, orange
+-- 'table.concat()' virker ikke hvis listen indeholder booleans (altså true og false), i så fald skal 'ipairs' bruges
 -- For at fjerne elementer bruges 'table.remove()':
 table.remove(A, 1)
 print(A[1], #A) -- apple   2
