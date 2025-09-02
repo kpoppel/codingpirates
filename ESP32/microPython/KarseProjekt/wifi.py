@@ -26,6 +26,9 @@ class Wifi:
             self._credential=self._credentials[x]
             print('Forsøger at forbinde til lokattion: ', x)
             if station.isconnected() == False:
+                station.active(False)
+                time.sleep(2)
+                station.active(True)
                 #print(self._credential['ssid'], self._credential['password'])
                 station.connect(self._credential['ssid'], self._credential['password'])
                 
