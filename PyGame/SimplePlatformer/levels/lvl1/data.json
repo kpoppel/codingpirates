@@ -1,0 +1,30 @@
+{
+	"identifier": "AutoLayers_advanced_demo",
+	"uniqueIdentifer": "a2b563a0-66b0-11ec-9cd7-fd8a9b24800f",
+	"x": -1,
+	"y": -1,
+	"width": 296,
+	"height": 304,
+	"bgColor": "#1B2037",
+	"neighbourLevels": [],
+	"customFields" : {},
+	"layers": [
+		"Sky.png",
+		"IntGrid_layer.png"
+	],
+	"entities": {
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "5af31880-d380-11f0-9d39-556059c3fec0",
+				"layer": "Entities",
+				"x": 248,
+				"y": 144,
+				"width": 8,
+				"height": 8,
+				"color": 2943221,
+				"customFields" : {}
+			}
+		]
+	}
+}
