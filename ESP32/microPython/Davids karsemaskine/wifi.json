@@ -1,0 +1,14 @@
+{
+    "Balsen": {
+        "ssid": "EGE-Internet",
+        "password": ""
+    },
+    "hjemme": {
+        "ssid": "Hjemme-Wifi",
+        "password": "Hjemme-Password"
+    },
+    "ude": {
+        "ssid": "ude-net",
+        "password": "ude-password"
+    }
+}
