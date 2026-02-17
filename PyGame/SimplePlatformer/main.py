@@ -11,7 +11,6 @@ class Platformer:
     def __init__(self, screen, width, height):
         self.screen = screen
         self.clock = pygame.time.Clock()
-        self.player_event = False
         self.width = width
         self.height = height
         self.level = 1
@@ -23,7 +22,7 @@ class Platformer:
 
     def getMapData(self):
         filepath = os.path.dirname(__file__)+"\\levels\\lvl"+str(self.level)+"\\mapData.csv"
-        self.map_data = open(filepath, "r")
+        self.map_data = filepath
         filepath = os.path.dirname(__file__)+"\\levels\\lvl"+str(self.level)+"\\data.json"
         self.map_json = open(filepath, "r")
 
@@ -37,9 +36,9 @@ class Platformer:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    self.player_event = event
-            world.update(self.player_event)
+            self.pressed_keys = pygame.key.get_pressed()
+            # print(self.pressed_keys)
+            world.update(self.pressed_keys)
             pygame.display.flip()
             self.clock.tick(60)
 

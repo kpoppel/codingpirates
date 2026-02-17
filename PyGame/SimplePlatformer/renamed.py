@@ -15,7 +15,7 @@ dt = 1/60
 screen = pygame.display.set_mode((296*scale, 304*scale))
 clock = pygame.time.Clock()
 
-background = pygame.image.load("PyGame/SimplePlatformer/levels/lvl1/_composite.png")
+background = pygame.image.load("PyGame/SimplePlatformer/levels/lvl1/bg.png")
 background = pygame.transform.scale(background, (296*scale,304*scale))
 
 def parseCSV(file):
@@ -46,7 +46,7 @@ def parseCSV(file):
         x = 0
     return contentArray, tileArray
 
-level1Data, level1Tiles = parseCSV("PyGame/SimplePlatformer/levels/lvl1/IntGrid_layer.csv")
+level1Data, level1Tiles = parseCSV("PyGame/SimplePlatformer/levels/lvl1/mapData.csv")
 level1JSON = json.load(open("PyGame/SimplePlatformer/levels/lvl1/data.json"))
 
 for tile in level1Tiles:

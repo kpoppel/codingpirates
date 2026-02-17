@@ -1,5 +1,6 @@
-BASE_WIDTH = 316
-BASE_HEIGHT = 316
+import pygame
+BASE_WIDTH = 296
+BASE_HEIGHT = 304
 BASE_TILE_SIZE = 8
 SCALE = 3
 
@@ -8,11 +9,14 @@ HEIGHT = BASE_HEIGHT * SCALE
 TILE_SIZE = 8 * SCALE
 
 GRAVITY = 50
+DRAG = 0.90
+JUMP_STRENGTH = 1000
 
-UP_KEYS = ["space", "w", "up_arrow"]
-DOWN_KEYS = ["s", "ctrl", "down_arrow"]
-LEFT_KEYS = ["a", "left_arrow"]
-RIGHT_KEYS = ["d", "right_arrow"]
+UP_KEYS = [pygame.K_SPACE, pygame.K_w, pygame.K_UP]
+DOWN_KEYS = [pygame.K_s, pygame.K_LCTRL, pygame.K_DOWN]
+LEFT_KEYS = [pygame.K_a, pygame.K_LEFT]
+RIGHT_KEYS = [pygame.K_d, pygame.K_RIGHT]
 PLAYER_SPEED = 30
+PLAYER_LIFE = 5
 
 DT = 1/60
