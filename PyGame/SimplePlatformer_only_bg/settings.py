@@ -1,0 +1,23 @@
+import pygame
+BASE_WIDTH = 256
+BASE_HEIGHT = 256
+BASE_TILE_SIZE = 8
+SCALE = 3
+
+WIDTH = BASE_WIDTH * SCALE
+HEIGHT = BASE_HEIGHT * SCALE
+TILE_SIZE = 8 * SCALE
+
+GRAVITY = 50
+DRAG = 0.90
+JUMP_STRENGTH = 1000
+WATER_DRAG = 0.8
+
+UP_KEYS = [pygame.K_SPACE, pygame.K_w, pygame.K_UP]
+DOWN_KEYS = [pygame.K_s, pygame.K_LCTRL, pygame.K_DOWN]
+LEFT_KEYS = [pygame.K_a, pygame.K_LEFT]
+RIGHT_KEYS = [pygame.K_d, pygame.K_RIGHT]
+PLAYER_SPEED = 30
+PLAYER_LIFE = 5
+
+DT = 1/60
