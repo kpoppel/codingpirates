@@ -22,6 +22,12 @@ class Platformer:
         self.levels = {}
         for i in range(1,4): # Change 4 to number of levels + 1
             self.levels[i] = level.Level(self.width, self.height, i)
+
+    def switchLevel(self, world):
+        self.level += 1
+        if self.level > self.levels.__len__():
+            self.level = 1
+        world.update_level(self.levels[self.level])
     
     # Main game loop, runs every frame
     def main(self):
@@ -35,10 +41,7 @@ class Platformer:
                 if event.type == pygame.KEYDOWN:
                     # print(event.dict["key"]) # Use to find keymappings
                     if event.dict["key"] == 48: # Key == 48 => Key == K_0
-                        self.level += 1
-                        if self.level > self.levels.__len__():
-                            self.level = 1
-                        world.update_level(self.levels[self.level])
+                        self.switchLevel(world)
             self.pressed_keys = pygame.key.get_pressed()
 
             world.update(self.pressed_keys)
