@@ -60,7 +60,10 @@ class Level:
                 self.coins.add(coin)
 
         # Player spawn
-        self.player_spawn = (self.dat["entities"]["PlayerSpawn"][0]["x"], self.dat["entities"]["PlayerSpawn"][0]["y"])
+        if "PlayerSpawn" in self.dat["entities"].keys():
+            self.player_spawn = (self.dat["entities"]["PlayerSpawn"][0]["x"], self.dat["entities"]["PlayerSpawn"][0]["y"])
+        else:
+            self.player_spawn = (0, 0)
 
         self.spawn_x = int(self.player_spawn[0] * SCALE)
         self.spawn_y = int(self.player_spawn[1] * SCALE)
