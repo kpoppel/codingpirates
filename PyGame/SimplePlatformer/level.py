@@ -14,14 +14,14 @@ class Level:
         self._setUpLevel()
 
     def _getMap(self):
-        filepath = os.path.dirname(__file__)+"\\levels\\lvl"+str(self.level)+"\\bg.png"
+        filepath = os.path.join(INFO.levelsPath,"lvl"+str(self.level), INFO.levelFileNames.background)
         self.bg = pygame.image.load(filepath)
         self.bg = pygame.transform.scale(self.bg, (self.width,self.height))
 
     def _getMapData(self):
-        filepath = os.path.dirname(__file__)+"\\levels\\lvl"+str(self.level)+"\\mapData.csv"
+        filepath = os.path.join(INFO.levelsPath, "lvl"+str(self.level), INFO.levelFileNames.csvData)
         self.map_data = filepath
-        filepath = os.path.dirname(__file__)+"\\levels\\lvl"+str(self.level)+"\\data.json"
+        filepath = os.path.join(INFO.levelsPath, "lvl"+str(self.level), INFO.levelFileNames.jsonData)
         self.map_json = open(filepath, "r")
         self.dat = json.load(self.map_json)
 
@@ -31,6 +31,7 @@ class Level:
         self.water = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.ladders = pygame.sprite.Group()
+        self.lava = pygame.sprite.Group()
 
         parsedWalls = self._parseCSV("1")
         for tile in parsedWalls:
@@ -51,6 +52,11 @@ class Level:
         for tile in parsedPlatforms:
             platform = Platform(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
             self.platforms.add(platform)
+
+        parsedLava = self._parseCSV("5")
+        for tile in parsedLava:
+            lava = Lava(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.lava.add(lava)
 
         # World entities
         self.coins = pygame.sprite.Group()

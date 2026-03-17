@@ -16,7 +16,7 @@ class World:
         
 
     def _setupWorld(self):
-        print("New player made")
+        # print("New player made")
         self.player = pygame.sprite.GroupSingle()
         self.player.add(Player(pygame.Rect(self.level.spawn_x, self.level.spawn_y, TILE_SIZE/2, TILE_SIZE/2), (255,0,0)))
 
@@ -81,6 +81,17 @@ class World:
         for sprite in self.level.water.sprites():
             if sprite.rect.colliderect(player.rect):
                 player.in_water = True
+                break
+
+    def _lava_collision(self):
+        player = self.player.sprite
+        player.in_lava = False
+        player.in_water = False
+        for sprite in self.level.lava.sprites():
+            if sprite.rect.colliderect(player.rect):
+                player.in_lava = True
+                player.in_water = True
+                break
 
     def _ladder_collision(self):
         player = self.player.sprite
@@ -123,7 +134,9 @@ class World:
         self._horizontal_movement_collision()
         self._vertical_movement_collision()        
         self._platform_collision()
-        self._water_collision()
+        self._lava_collision()
+        if not self.player.sprite.in_lava:
+            self._water_collision()
 
         # Handle entity interactions
         self._handle_coins()

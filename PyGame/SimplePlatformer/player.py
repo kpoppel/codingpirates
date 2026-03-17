@@ -1,12 +1,12 @@
 import pygame, os
 from pygame import Vector2 as Vec
-from settings import UP_KEYS, DOWN_KEYS, LEFT_KEYS, RIGHT_KEYS, PLAYER_SPEED, PLAYER_LIFE, JUMP_STRENGTH, DT
+from settings import UP_KEYS, DOWN_KEYS, LEFT_KEYS, RIGHT_KEYS, PLAYER_SPEED, PLAYER_LIFE, JUMP_STRENGTH, DT, INFO
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, rect:pygame.Rect, colour:tuple):
         super().__init__()
         self.rect = rect
-        self.image = pygame.image.load(os.path.dirname(__file__)+"\\assets\\red.png")
+        self.image = pygame.image.load(INFO.assetsPath+"red.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
         self.colour = colour
         self.vel = Vec(0,0)
@@ -19,6 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.on_ladder = False
         self.down = False # Helper for platforms
         self.on_platform = False
+        self.in_lava = False
+        self.lava_tick = 60 # Deal damage from lava every x ticks
         self.coins = 0
 
     def _get_keys_in_list(self, keys, list):

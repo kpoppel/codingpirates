@@ -1,5 +1,5 @@
-import pygame
-from settings import WIDTH, HEIGHT
+import pygame, os
+from settings import WIDTH, HEIGHT, INFO
 
 class Game:
     def __init__(self, screen):
@@ -25,8 +25,16 @@ class Game:
         message = self.font.render("Coins: "+str(player.coins), True, pygame.Color("darkorange"))
         self.screen.blit(message, (30,30))
 
+    # Function to render player life as hearts
+    def _draw_life(self, player):
+        heart = pygame.image.load(os.path.join(INFO.assetsPath + "heart.png"))
+        heart = pygame.transform.scale(heart, (45,45))
+        for i in range(0, player.life):
+            self.screen.blit(heart, (10+55*i, 100))
+
     # Function called every frame to update game state
     def game_state(self, player):
         if player.life <= 0 or player.rect.y >= HEIGHT:
             self._game_lose(player)
         self._draw_coins(player)
+        self._draw_life(player)

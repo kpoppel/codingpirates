@@ -20,8 +20,12 @@ class Platformer:
     # Function to load all levels
     def _load_levels(self):
         self.levels = {}
-        for i in range(1,4): # Change 4 to number of levels + 1
-            self.levels[i] = level.Level(self.width, self.height, i)
+        if INFO.levelStartsFromOne:
+            for i in range(1,INFO.levelAmount+1):
+                self.levels[i] = level.Level(self.width, self.height, i)
+        else:
+            for i in range(0, INFO.levelAmount+1):
+                self.levels[i] = level.Level(self.width, self.height, i)
 
     def switchLevel(self, world):
         self.level += 1
