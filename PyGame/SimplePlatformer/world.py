@@ -126,7 +126,7 @@ class World:
         self.player.sprite.rect.x = self.level.spawn_x
         self.player.sprite.rect.y = self.level.spawn_y
 
-    def update(self, keys):
+    def update(self, keys, last_key):
         self.level.coins.draw(self.screen)
 
         # Movement and collision
@@ -142,7 +142,7 @@ class World:
         self._handle_coins()
 
         # Update player
-        self.player.update(keys)
+        self.player.update(keys, last_key)
         self.player.draw(self.screen)
 
         # Updates game

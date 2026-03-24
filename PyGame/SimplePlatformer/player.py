@@ -20,15 +20,19 @@ class Player(pygame.sprite.Sprite):
         self.down = False # Helper for platforms
         self.on_platform = False
         self.in_lava = False
+        self.can_jump = False
         self.lava_tick = 60 # Deal damage from lava every x ticks
         self.coins = 0
+        self.jump_tick = 8
 
     def _get_keys_in_list(self, keys, list):
         for key in list:
             if keys[key]:
                 return True
 
-    def update(self, keys):
+    def update(self, keys, last_key):
+        if self.can_jump:
+            self.jump_tick -= 1
         if self.on_ladder:
             # Movement on ladders
             if self._get_keys_in_list(keys, UP_KEYS):
@@ -63,6 +67,11 @@ class Player(pygame.sprite.Sprite):
             if self._get_keys_in_list(keys, UP_KEYS):
                 if self.on_ground:
                     self.vel.y = -JUMP_STRENGTH
+                    self.can_jump = True
+                elif self.can_jump and self.jump_tick <= 0:
+                    self.vel.y = -JUMP_STRENGTH
+                    self.can_jump = False
+                    self.jump_tick = 8
             if self._get_keys_in_list(keys, DOWN_KEYS):
                 self.down = True
             else:

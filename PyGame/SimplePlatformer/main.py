@@ -14,6 +14,7 @@ class Platformer:
         self.clock = pygame.time.Clock()
         self.width = width
         self.height = height
+        self.last_key = False
         self.level = 1
         self._load_levels()
 
@@ -43,12 +44,14 @@ class Platformer:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    # print(event.dict["key"]) # Use to find keymappings
-                    if event.dict["key"] == 48: # Key == 48 => Key == K_0
+                    if event.dict["key"] == pygame.K_0:
                         self.switchLevel(world)
+                if event.type == pygame.KEYUP:
+                    self.last_key = event.dict["key"]
+                    
             self.pressed_keys = pygame.key.get_pressed()
 
-            world.update(self.pressed_keys)
+            world.update(self.pressed_keys, self.last_key)
             pygame.display.flip()
             self.clock.tick(60)
 

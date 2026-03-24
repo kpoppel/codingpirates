@@ -26,13 +26,13 @@ DT = 1/60 # Delta time, time between each frame
 
 # INFO stores various base locations to help with file systems
 INFO = types.SimpleNamespace(
-    levelAmount = 5,
+    levelAmount = 8,
     assetsPath = os.path.join(os.path.dirname(__file__), "assets", ""),
     levelsPath = os.path.join(os.path.dirname(__file__), "levels", ""),
     levelFileNames = types.SimpleNamespace(
-        background = "bg.png",
+        background = "_composite.png",
         jsonData = "data.json",
-        csvData = "mapData.csv"
+        csvData = "Walls.csv"
     ),
     levelStartsFromOne = True
 )

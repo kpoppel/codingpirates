@@ -14,14 +14,14 @@ class Level:
         self._setUpLevel()
 
     def _getMap(self):
-        filepath = os.path.join(INFO.levelsPath,"lvl"+str(self.level), INFO.levelFileNames.background)
+        filepath = os.path.join(INFO.levelsPath,"Level_"+str(self.level), INFO.levelFileNames.background)
         self.bg = pygame.image.load(filepath)
         self.bg = pygame.transform.scale(self.bg, (self.width,self.height))
 
     def _getMapData(self):
-        filepath = os.path.join(INFO.levelsPath, "lvl"+str(self.level), INFO.levelFileNames.csvData)
+        filepath = os.path.join(INFO.levelsPath, "Level_"+str(self.level), INFO.levelFileNames.csvData)
         self.map_data = filepath
-        filepath = os.path.join(INFO.levelsPath, "lvl"+str(self.level), INFO.levelFileNames.jsonData)
+        filepath = os.path.join(INFO.levelsPath, "Level_"+str(self.level), INFO.levelFileNames.jsonData)
         self.map_json = open(filepath, "r")
         self.dat = json.load(self.map_json)
 
