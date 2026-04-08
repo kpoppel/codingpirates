@@ -1,5 +1,5 @@
 import pygame, os
-from settings import WIDTH, HEIGHT, INFO
+from settings import WIDTH, HEIGHT, INFO, ASSETS, TICKS
 
 class Game:
     def __init__(self, screen):
@@ -27,10 +27,19 @@ class Game:
 
     # Function to render player life as hearts
     def _draw_life(self, player):
-        heart = pygame.image.load(os.path.join(INFO.assetsPath + "heart.png"))
-        heart = pygame.transform.scale(heart, (45,45))
+        heart = ASSETS.heart
         for i in range(0, player.life):
             self.screen.blit(heart, (10+55*i, 100))
+
+    def _draw_damage_display(self, player):
+        image = ASSETS.damage
+        image.set_alpha(125)
+        if player.display_damage and player.damage_display_tick >= 0:
+            self.screen.blit(image, (0,0))
+            player.damage_display_tick -= 1
+        else:
+            player.display_damage = False
+            player.damage_display_tick = TICKS.damageDisplayTick
 
     # Function called every frame to update game state
     def game_state(self, player):
@@ -38,3 +47,4 @@ class Game:
             self._game_lose(player)
         self._draw_coins(player)
         self._draw_life(player)
+        self._draw_damage_display(player)

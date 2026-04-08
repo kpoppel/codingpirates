@@ -1,4 +1,4 @@
-import pygame, os, sys
+import pygame, sys
 from world import World
 from settings import *
 import level

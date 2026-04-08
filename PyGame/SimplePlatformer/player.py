@@ -1,6 +1,6 @@
 import pygame, os
 from pygame import Vector2 as Vec
-from settings import UP_KEYS, DOWN_KEYS, LEFT_KEYS, RIGHT_KEYS, PLAYER_SPEED, PLAYER_LIFE, JUMP_STRENGTH, DT, INFO
+from settings import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, rect:pygame.Rect, colour:tuple):
@@ -21,9 +21,12 @@ class Player(pygame.sprite.Sprite):
         self.on_platform = False
         self.in_lava = False
         self.can_jump = False
-        self.lava_tick = 60 # Deal damage from lava every x ticks
+        self.lava_tick = TICKS.lavaTick # Deal damage from lava every x ticks
         self.coins = 0
-        self.jump_tick = 8
+        self.jump_tick = TICKS.jumpTick
+        self.display_damage = False
+        self.damage_display_tick = TICKS.damageDisplayTick
+        self.inv = []
 
     def _get_keys_in_list(self, keys, list):
         for key in list:
@@ -33,6 +36,9 @@ class Player(pygame.sprite.Sprite):
     def update(self, keys, last_key):
         if self.can_jump:
             self.jump_tick -= 1
+
+        self.lava_tick += 1
+
         if self.on_ladder:
             # Movement on ladders
             if self._get_keys_in_list(keys, UP_KEYS):

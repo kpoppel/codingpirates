@@ -1,5 +1,5 @@
 import pygame
-from settings import TILE_SIZE, WIDTH, GRAVITY, DT, DRAG, WATER_DRAG, SCALE
+from settings import TILE_SIZE, WIDTH, GRAVITY, DT, DRAG, WATER_DRAG, SCALE, PLAYER_LIFE
 from tiles import *
 from entities import *
 from player import Player
@@ -13,6 +13,7 @@ class World:
         self.gravity = GRAVITY
         self.game = Game(self.screen)
         self._setupWorld()
+        self.previous_life = PLAYER_LIFE
         
 
     def _setupWorld(self):
@@ -93,6 +94,11 @@ class World:
                 player.in_water = True
                 break
 
+        if player.in_lava:
+            if player.lava_tick >= 60:
+                player.life -= 1
+                player.lava_tick = 0
+
     def _ladder_collision(self):
         player = self.player.sprite
         player.on_ladder = False
@@ -121,6 +127,13 @@ class World:
                 player.coins += 1
                 self.level.coins.remove(coin)
 
+    def _handle_keys(self):
+        player = self.player.sprite
+        for gold_key in self.level.gold_keys.sprites():
+            if gold_key.rect.colliderect(player.rect):
+                player.inv.append("Gold Key")
+                self.level.gold_keys.remove(gold_key)
+
     def update_level(self, level:Level):
         self.level = level
         self.player.sprite.rect.x = self.level.spawn_x
@@ -128,6 +141,9 @@ class World:
 
     def update(self, keys, last_key):
         self.level.coins.draw(self.screen)
+        self.level.chests.draw(self.screen)
+        self.level.gold_keys.draw(self.screen)
+        self.level.door_gold_key.draw(self.screen)
 
         # Movement and collision
         self._ladder_collision()
@@ -140,10 +156,15 @@ class World:
 
         # Handle entity interactions
         self._handle_coins()
+        self._handle_keys()
 
         # Update player
         self.player.update(keys, last_key)
         self.player.draw(self.screen)
+
+        if self.player.sprite.life < self.previous_life:
+            self.player.sprite.display_damage = True
+        self.previous_life = self.player.sprite.life
 
         # Updates game
         self.game.game_state(self.player.sprite)

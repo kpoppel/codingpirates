@@ -36,3 +36,14 @@ INFO = types.SimpleNamespace(
     ),
     levelStartsFromOne = True
 )
+
+TICKS = types.SimpleNamespace(
+    lavaTick = 60,
+    jumpTick = 8,
+    damageDisplayTick = 10
+)
+
+ASSETS = types.SimpleNamespace(
+    heart = pygame.transform.scale(pygame.image.load(INFO.assetsPath + "heart.png"), (45,45)),
+    damage = pygame.transform.scale(pygame.image.load(INFO.assetsPath + "red.png"), (WIDTH, HEIGHT))
+)

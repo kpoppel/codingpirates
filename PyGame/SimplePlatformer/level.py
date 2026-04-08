@@ -59,12 +59,34 @@ class Level:
             self.lava.add(lava)
 
         # World entities
+        #-------------------------------------------------------Pickups
         self.coins = pygame.sprite.Group()
         if "Coin" in self.dat["entities"].keys():
             for entity in self.dat["entities"]["Coin"]:
                 coin = Coin(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
                 self.coins.add(coin)
-
+        #-------------------------------------------------------
+        #-------------------------------------------------------Doors
+        self.gold_keys = pygame.sprite.Group()
+        if "GoldKey" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["GoldKey"]:
+                key = GoldKey(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+                self.gold_keys.add(key)
+        
+        self.door_gold_key = pygame.sprite.Group()
+        if "DoorGoldKey" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["DoorGoldKey"]:
+                door = DoorGoldKey(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+                self.door_gold_key.add(door)
+        #-------------------------------------------------------
+        #-------------------------------------------------------Objects
+        self.chests = pygame.sprite.Group()
+        if "Chest" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Chest"]:
+                chest = Chest(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+                self.chests.add(chest)
+        #-------------------------------------------------------
+    
         # Player spawn
         if "PlayerSpawn" in self.dat["entities"].keys():
             self.player_spawn = (self.dat["entities"]["PlayerSpawn"][0]["x"], self.dat["entities"]["PlayerSpawn"][0]["y"])
