@@ -1,0 +1,64 @@
+{
+	"identifier": "Level_6",
+	"uniqueIdentifer": "9410e540-21a0-11f1-a323-edfa25be1655",
+	"x": 1280,
+	"y": 0,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "e14af8f0-fa90-11f0-91c7-ff5bd630e15f",
+			"dir": "w"
+		},
+		{
+			"levelIid": "ff7f5640-21a0-11f1-a323-f57ebbc44e1a",
+			"dir": "e"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"GoldKey": [
+			{
+				"id": "GoldKey",
+				"iid": "c07d1e50-21a0-11f1-a323-31175a1aeea1",
+				"layer": "Entities",
+				"x": 16,
+				"y": 112,
+				"width": 8,
+				"height": 8,
+				"color": 39387,
+				"customFields" : {}
+			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "c260ab60-21a0-11f1-a323-1d58ecfb8d57",
+				"layer": "Entities",
+				"x": 72,
+				"y": 200,
+				"width": 8,
+				"height": 8,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Coin": [
+			{
+				"id": "Coin",
+				"iid": "eb046ac0-21a0-11f1-a323-99e7b7fa2e44",
+				"layer": "Entities",
+				"x": 152,
+				"y": 8,
+				"width": 8,
+				"height": 8,
+				"color": 13808385,
+				"customFields" : {}
+			}
+		]
+	}
+}
