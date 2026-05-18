@@ -1,0 +1,36 @@
+{
+	"identifier": "Level_17",
+	"uniqueIdentifer": "d4806b40-48b0-11f1-af0f-97ddf96b48ff",
+	"x": 512,
+	"y": -768,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "ff6c7450-48b0-11f1-af0f-d304545b01ea",
+			"dir": "sw"
+		},
+		{
+			"levelIid": "1deae460-48b0-11f1-af0f-9b7501010a84",
+			"dir": "s"
+		},
+		{
+			"levelIid": "be577710-48b0-11f1-af0f-e913af0f309d",
+			"dir": "se"
+		},
+		{
+			"levelIid": "d3649b00-48b0-11f1-af0f-77063b25242c",
+			"dir": "w"
+		},
+		{
+			"levelIid": "f01da9d0-48b0-11f1-af0f-3f811078aa13",
+			"dir": "e"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities" : {}
+}

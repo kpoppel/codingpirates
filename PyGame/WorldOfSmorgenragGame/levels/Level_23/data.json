@@ -1,0 +1,73 @@
+{
+	"identifier": "Level_23",
+	"uniqueIdentifer": "274a8b00-48b0-11f1-af0f-63a92f105cce",
+	"x": 1280,
+	"y": -512,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "c1d2f750-48b0-11f1-af0f-5996916a3826",
+			"dir": "sw"
+		},
+		{
+			"levelIid": "d9488530-48b0-11f1-af0f-4919be3369a5",
+			"dir": "s"
+		},
+		{
+			"levelIid": "0afd0f40-48b0-11f1-af0f-d5f2971f675d",
+			"dir": "w"
+		},
+		{
+			"levelIid": "415f06b0-48b0-11f1-af0f-6bd9a6708f2e",
+			"dir": "e"
+		},
+		{
+			"levelIid": "63e9ccb0-48b0-11f1-af0f-9727330026b7",
+			"dir": "n"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"SpikedCubeEnemy": [
+			{
+				"id": "SpikedCubeEnemy",
+				"iid": "57a75f30-48b0-11f1-af0f-ed4e92605a01",
+				"layer": "Entities",
+				"x": 48,
+				"y": 80,
+				"width": 8,
+				"height": 8,
+				"color": 10626611,
+				"customFields": {
+					"EndLocation": {
+						"cx": 8,
+						"cy": 10
+					},
+					"Speed": 12
+				}
+			},
+			{
+				"id": "SpikedCubeEnemy",
+				"iid": "5f0b4f20-48b0-11f1-af0f-7b1928c9a59d",
+				"layer": "Entities",
+				"x": 136,
+				"y": 144,
+				"width": 8,
+				"height": 8,
+				"color": 10626611,
+				"customFields": {
+					"EndLocation": {
+						"cx": 15,
+						"cy": 18
+					},
+					"Speed": 12
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,58 @@
+{
+	"identifier": "Level_22",
+	"uniqueIdentifer": "0afd0f40-48b0-11f1-af0f-d5f2971f675d",
+	"x": 1024,
+	"y": -512,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "be577710-48b0-11f1-af0f-e913af0f309d",
+			"dir": "w"
+		},
+		{
+			"levelIid": "f01da9d0-48b0-11f1-af0f-3f811078aa13",
+			"dir": "nw"
+		},
+		{
+			"levelIid": "409618c0-48b0-11f1-af0f-01e6fa904dc4",
+			"dir": "sw"
+		},
+		{
+			"levelIid": "c1d2f750-48b0-11f1-af0f-5996916a3826",
+			"dir": "s"
+		},
+		{
+			"levelIid": "d9488530-48b0-11f1-af0f-4919be3369a5",
+			"dir": "se"
+		},
+		{
+			"levelIid": "274a8b00-48b0-11f1-af0f-63a92f105cce",
+			"dir": "e"
+		},
+		{
+			"levelIid": "63e9ccb0-48b0-11f1-af0f-9727330026b7",
+			"dir": "ne"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"DoorRedKey": [
+			{
+				"id": "DoorRedKey",
+				"iid": "250e0880-48b0-11f1-af0f-872e631c7481",
+				"layer": "Entities",
+				"x": 216,
+				"y": 152,
+				"width": 8,
+				"height": 16,
+				"color": 14957380,
+				"customFields" : {}
+			}
+		]
+	}
+}

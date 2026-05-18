@@ -1,0 +1,46 @@
+{
+	"identifier": "Level_1",
+	"uniqueIdentifer": "3dba5b30-21a0-11f1-99dd-cfb9d6246271",
+	"x": -256,
+	"y": 0,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "ceb467e0-21a0-11f1-a323-0f539c913532",
+			"dir": "e"
+		},
+		{
+			"levelIid": "5180dcd0-48b0-11f1-af0f-d9acaf0d0208",
+			"dir": "ne"
+		},
+		{
+			"levelIid": "602c8220-48b0-11f1-af0f-a16b11185a3d",
+			"dir": "n"
+		},
+		{
+			"levelIid": "4dfef720-48b0-11f1-af0f-15cc51801516",
+			"dir": "w"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"DoorGoldKey": [
+			{
+				"id": "DoorGoldKey",
+				"iid": "375f8550-48b0-11f1-af0f-3bf21158e509",
+				"layer": "Entities",
+				"x": 24,
+				"y": 160,
+				"width": 8,
+				"height": 16,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		]
+	}
+}

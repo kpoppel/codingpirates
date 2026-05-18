@@ -1,0 +1,44 @@
+{
+	"identifier": "Level_26",
+	"uniqueIdentifer": "a59a82d0-48b0-11f1-af0f-856b56fa773c",
+	"x": 1024,
+	"y": 0,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "7c955140-48b0-11f1-af0f-937cbe57e8e8",
+			"dir": "w"
+		},
+		{
+			"levelIid": "409618c0-48b0-11f1-af0f-01e6fa904dc4",
+			"dir": "nw"
+		},
+		{
+			"levelIid": "c1d2f750-48b0-11f1-af0f-5996916a3826",
+			"dir": "n"
+		},
+		{
+			"levelIid": "d9488530-48b0-11f1-af0f-4919be3369a5",
+			"dir": "ne"
+		},
+		{
+			"levelIid": "b882e770-48b0-11f1-af0f-6df18d6631f1",
+			"dir": "e"
+		},
+		{
+			"levelIid": "de2a7dd0-48b0-11f1-af0f-2739f4708d9a",
+			"dir": "s"
+		},
+		{
+			"levelIid": "df3d9b80-48b0-11f1-af0f-e77ecf3998e3",
+			"dir": "se"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities" : {}
+}
