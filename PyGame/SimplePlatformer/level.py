@@ -66,6 +66,7 @@ class Level:
                 coin = Coin(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
                 self.coins.add(coin)
         #-------------------------------------------------------
+
         #-------------------------------------------------------Doors
         self.gold_keys = pygame.sprite.Group()
         if "GoldKey" in self.dat["entities"].keys():
@@ -79,12 +80,27 @@ class Level:
                 door = DoorGoldKey(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
                 self.door_gold_key.add(door)
         #-------------------------------------------------------
+
         #-------------------------------------------------------Objects
         self.chests = pygame.sprite.Group()
         if "Chest" in self.dat["entities"].keys():
             for entity in self.dat["entities"]["Chest"]:
                 chest = Chest(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
                 self.chests.add(chest)
+
+        self.goal = pygame.sprite.GroupSingle()
+        if "Goal" in self.dat["entities"].keys():
+            entity = self.dat["entities"]["Goal"][0]
+            goal = Goal(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+            self.goal.add(goal)
+        #-------------------------------------------------------
+
+        #-------------------------------------------------------Enemies
+        self.SpikedCubes = pygame.sprite.Group()
+        if "SpikedCubeEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["SpikedCubeEnemy"]:
+                spiked_cube = SpikedCube(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.SpikedCubes.add(spiked_cube)
         #-------------------------------------------------------
     
         # Player spawn

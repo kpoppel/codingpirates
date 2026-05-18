@@ -1,11 +1,13 @@
-import pygame, os
+import pygame, os, sys
 from settings import WIDTH, HEIGHT, INFO, ASSETS, TICKS
+import itertools
 
 class Game:
     def __init__(self, screen):
         self.screen = screen
         self.font = pygame.font.SysFont("impact", 36)
         self.message_color = pygame.Color("red")
+        self.offset = itertools.repeat((0,0))
 
     # Function to lose the game
     def _game_lose(self, player):
@@ -35,16 +37,31 @@ class Game:
         image = ASSETS.damage
         image.set_alpha(125)
         if player.display_damage and player.damage_display_tick >= 0:
+            self.offset = self.shake()
             self.screen.blit(image, (0,0))
             player.damage_display_tick -= 1
         else:
             player.display_damage = False
             player.damage_display_tick = TICKS.damageDisplayTick
 
+    def shake(self):
+        s = 1
+        for _ in range(0, 4):
+            for x in range(20, 0, -5):
+                yield (x*s, 0)
+            for x in range(0, 20, -5):
+                yield (x*s, 0)
+            s *= -1
+        while True:
+            yield (0, 0)
+
     # Function called every frame to update game state
-    def game_state(self, player):
+    def game_state(self, player, org_screen):
         if player.life <= 0 or player.rect.y >= HEIGHT:
             self._game_lose(player)
+        if player.game_won:
+            self._game_win(player)
         self._draw_coins(player)
         self._draw_life(player)
         self._draw_damage_display(player)
+        org_screen.blit(self.screen, next(self.offset))

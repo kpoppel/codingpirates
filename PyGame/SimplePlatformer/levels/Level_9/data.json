@@ -1,0 +1,53 @@
+{
+	"identifier": "Level_9",
+	"uniqueIdentifer": "ceb467e0-21a0-11f1-a323-0f539c913532",
+	"x": 2048,
+	"y": 0,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "18132890-21a0-11f1-a323-db6b152ba211",
+			"dir": "w"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"SpikedCubeEnemy": [
+			{
+				"id": "SpikedCubeEnemy",
+				"iid": "82d90c40-21a0-11f1-bce1-a9d257e0d49a",
+				"layer": "Entities",
+				"x": 184,
+				"y": 128,
+				"width": 8,
+				"height": 8,
+				"color": 10626611,
+				"customFields": {
+					"EndLocation": {
+						"cx": 9,
+						"cy": 16
+					},
+					"Speed": 72
+				}
+			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "98ebaec0-21a0-11f1-bce1-b5bf30f89258",
+				"layer": "Entities",
+				"x": 16,
+				"y": 128,
+				"width": 8,
+				"height": 8,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		]
+	}
+}

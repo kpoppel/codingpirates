@@ -30,6 +30,7 @@ class DoorGoldKey(pygame.sprite.Sprite):
     def openDoor(self, player):
         if "Gold Key" in player.inv:
             self.open = True
+            player.inv.remove("Gold Key")
 #---------------------------------------------------
 
 
@@ -46,6 +47,13 @@ class Chest(pygame.sprite.Sprite):
         if not self.open:
             self.open = True
             player.coins += 1000
+
+class Goal(pygame.sprite.Sprite):
+    def __init__(self, rect:pygame.Rect):
+        super().__init__()
+        self.rect = rect
+        self.image = pygame.image.load(INFO.assetsPath+"goal.png")
+        self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 #---------------------------------------------------
 
 #---------------------------------------------------Enemies
@@ -55,10 +63,11 @@ class SpikedCube(pygame.sprite.Sprite):
         self.rect = rect
         self.image = pygame.image.load(INFO.assetsPath+"spiked_cube_enemy.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
-        self.startPoint = Vec(data["x"]/TILE_SIZE, data["Y"]/TILE_SIZE)
-        self.endPoint = Vec(data["customFields"]["EndLocation"]["cx"], data["customFields"]["EndLocation"]["cy"])
-        self.speed = data["customFields"]["speed"]
+        self.startPoint = Vec(data["x"]*SCALE, data["y"]*SCALE)
+        self.endPoint = Vec(data["customFields"]["EndLocation"]["cx"]*TILE_SIZE, data["customFields"]["EndLocation"]["cy"]*TILE_SIZE)
+        self.speed = data["customFields"]["Speed"]
         self.direction = "toEnd"
+        self.old_unitVector = Vec()
 
     def move(self):
         diff = Vec()
@@ -66,28 +75,33 @@ class SpikedCube(pygame.sprite.Sprite):
         new_location = Vec()
 
         if self.direction == "toEnd":
-            diff.x = self.endPoint.x - self.rect.x
-            diff.y = self.endPoint.y - self.rect.y
+            diff = self.endPoint - location
         elif self.direction == "toStart":
-            diff.x = self.endPoint.x - self.rect.x
-            diff.y = self.endPoint.y - self.rect.x
+            diff = self.startPoint - location
         
-        unitVector = diff/diff.length
-        movement = unitVector * self.speed
+        if diff.length() != 0:
+            unitVector = diff/diff.length()
+        else:
+            unitVector = self.old_unitVector * -1
+        movement = unitVector * self.speed * DT
 
         if self.direction == "toEnd":
-            if movement.length > diff.length:
+            if movement.length() > diff.length():
                 new_location = self.endPoint
+                self.direction = "toStart"
             else:
                 new_location = location + movement
-                
+
         elif self.direction == "toStart":
-            if movement.length > diff.length:
+            if movement.length() > diff.length():
                 new_location = self.startPoint
+                self.direction = "toEnd"
             else:
                 new_location = location + movement
             
         self.rect.x = new_location.x
+        self.rect.y = new_location.y
+        self.old_unitVector = unitVector.copy()
 
 
 #---------------------------------------------------

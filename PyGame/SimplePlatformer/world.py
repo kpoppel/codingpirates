@@ -7,8 +7,9 @@ from game import Game
 from level import Level
 
 class World:
-    def __init__(self, screen:pygame.Surface, level:Level):
+    def __init__(self, screen:pygame.Surface, level:Level, org_screen:pygame.Surface):
         self.screen = screen
+        self.org_screen = org_screen
         self.level = level
         self.gravity = GRAVITY
         self.game = Game(self.screen)
@@ -120,6 +121,34 @@ class World:
                     else:
                         player.on_platform = False
     
+    def _door_collision(self):
+        player = self.player.sprite
+        for sprite in self.level.door_gold_key.sprites():
+            if sprite.rect.colliderect(player.rect):
+                # checks if moving towards left
+                if player.vel.x < 0:
+                    player.rect.left = sprite.rect.right
+                    player.on_left = True
+                    player.vel.x = 0
+                # checks if moving towards right
+                elif player.vel.x > 0:
+                    player.rect.right = sprite.rect.left
+                    player.on_right = True
+                    player.vel.x = 0
+
+        for sprite in self.level.door_gold_key.sprites():
+            if sprite.rect.colliderect(player.rect):
+                # checks if moving towards bottom, except when holding down and on platform
+                if player.vel.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                    player.vel.y = 0
+                    player.on_ground = True
+                # checks if moving towards up
+                elif player.vel.y < 0:
+                    player.rect.top = sprite.rect.bottom
+                    player.vel.y = 0
+                    player.on_ceiling = True
+    
     def _handle_coins(self):
         player = self.player.sprite
         for coin in self.level.coins.sprites():
@@ -133,6 +162,29 @@ class World:
             if gold_key.rect.colliderect(player.rect):
                 player.inv.append("Gold Key")
                 self.level.gold_keys.remove(gold_key)
+                print(player.inv)
+
+    def _handle_enemies(self):
+        player = self.player.sprite
+        for enemy in self.level.SpikedCubes.sprites():
+            if enemy.rect.colliderect(player.rect) and player.lava_tick >= 60:
+                player.life -= 1
+                player.lava_tick = 0
+            enemy.move()
+
+    def _open_doors(self):
+        player = self.player.sprite
+        for door in self.level.door_gold_key.sprites():
+            if player.rect.colliderect(door):
+                door.openDoor(player)
+            if door.open:
+                self.level.door_gold_key.remove(door)
+
+    def _handle_goal(self):
+        player = self.player.sprite
+        for goal in self.level.goal.sprites():
+            if player.rect.colliderect(goal):
+                player.game_won = True
 
     def update_level(self, level:Level):
         self.level = level
@@ -144,11 +196,15 @@ class World:
         self.level.chests.draw(self.screen)
         self.level.gold_keys.draw(self.screen)
         self.level.door_gold_key.draw(self.screen)
+        self.level.SpikedCubes.draw(self.screen)
+        self.level.goal.draw(self.screen)
 
         # Movement and collision
         self._ladder_collision()
         self._horizontal_movement_collision()
-        self._vertical_movement_collision()        
+        self._vertical_movement_collision()
+        self._open_doors()
+        self._door_collision()
         self._platform_collision()
         self._lava_collision()
         if not self.player.sprite.in_lava:
@@ -157,6 +213,8 @@ class World:
         # Handle entity interactions
         self._handle_coins()
         self._handle_keys()
+        self._handle_enemies()
+        self._handle_goal()
 
         # Update player
         self.player.update(keys, last_key)
@@ -167,6 +225,6 @@ class World:
         self.previous_life = self.player.sprite.life
 
         # Updates game
-        self.game.game_state(self.player.sprite)
+        self.game.game_state(self.player.sprite, self.org_screen)
 
     

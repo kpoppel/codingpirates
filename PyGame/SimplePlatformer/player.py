@@ -27,6 +27,8 @@ class Player(pygame.sprite.Sprite):
         self.display_damage = False
         self.damage_display_tick = TICKS.damageDisplayTick
         self.inv = []
+        self.game_over = False
+        self.game_won = False
 
     def _get_keys_in_list(self, keys, list):
         for key in list:

@@ -33,6 +33,32 @@
 				"color": 7552569,
 				"customFields" : {}
 			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "01d67360-21a0-11f1-a323-893e7ae0d3cf",
+				"layer": "Entities",
+				"x": 24,
+				"y": 160,
+				"width": 8,
+				"height": 8,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Goal": [
+			{
+				"id": "Goal",
+				"iid": "a8a5e3c0-21a0-11f1-99dd-9b6e1bba6d1f",
+				"layer": "Entities",
+				"x": 200,
+				"y": 160,
+				"width": 8,
+				"height": 8,
+				"color": 2943221,
+				"customFields" : {}
+			}
 		]
 	}
 }

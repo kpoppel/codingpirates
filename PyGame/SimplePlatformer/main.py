@@ -5,12 +5,14 @@ import level
 
 pygame.init()
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+org_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = org_screen.copy()
 pygame.display.set_caption("[GAME NAME HERE]")
 
 class Platformer:
-    def __init__(self, screen, width, height):
+    def __init__(self, screen, width, height, org_screen):
         self.screen = screen
+        self.org_screen = org_screen
         self.clock = pygame.time.Clock()
         self.width = width
         self.height = height
@@ -36,7 +38,7 @@ class Platformer:
     
     # Main game loop, runs every frame
     def main(self):
-        world = World(self.screen, self.levels[self.level])
+        world = World(self.screen, self.levels[self.level], self.org_screen)
         while True:
             self.screen.blit(self.levels[self.level].bg, (0, 0))
             for event in pygame.event.get():
@@ -51,11 +53,12 @@ class Platformer:
                     
             self.pressed_keys = pygame.key.get_pressed()
 
-            world.update(self.pressed_keys, self.last_key)
+            if not world.player.sprite.game_over:
+                world.update(self.pressed_keys, self.last_key)
             pygame.display.flip()
             self.clock.tick(60)
 
 
 if __name__ == "__main__":
-    play = Platformer(screen, WIDTH, HEIGHT)
+    play = Platformer(screen, WIDTH, HEIGHT, org_screen)
     play.main()
