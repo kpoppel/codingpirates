@@ -123,7 +123,7 @@ class World:
     
     def _door_collision(self):
         player = self.player.sprite
-        for sprite in self.level.door_gold_key.sprites():
+        for sprite in self.level.doors.sprites():
             if sprite.rect.colliderect(player.rect):
                 # checks if moving towards left
                 if player.vel.x < 0:
@@ -136,7 +136,7 @@ class World:
                     player.on_right = True
                     player.vel.x = 0
 
-        for sprite in self.level.door_gold_key.sprites():
+        for sprite in self.level.doors.sprites():
             if sprite.rect.colliderect(player.rect):
                 # checks if moving towards bottom, except when holding down and on platform
                 if player.vel.y > 0:
@@ -158,10 +158,10 @@ class World:
 
     def _handle_keys(self):
         player = self.player.sprite
-        for gold_key in self.level.gold_keys.sprites():
-            if gold_key.rect.colliderect(player.rect):
-                player.inv.append("Gold Key")
-                self.level.gold_keys.remove(gold_key)
+        for key in self.level.keys.sprites():
+            if key.rect.colliderect(player.rect):
+                player.inv.append(key.colour+"_key")
+                self.level.keys.remove(key)
                 print(player.inv)
 
     def _handle_enemies(self):
@@ -174,30 +174,46 @@ class World:
 
     def _open_doors(self):
         player = self.player.sprite
-        for door in self.level.door_gold_key.sprites():
+        for door in self.level.doors.sprites():
             if player.rect.colliderect(door):
                 door.openDoor(player)
             if door.open:
-                self.level.door_gold_key.remove(door)
+                self.level.doors.remove(door)
 
-    def _handle_goal(self):
+    def _handle_FinishFlag(self):
         player = self.player.sprite
-        for goal in self.level.goal.sprites():
-            if player.rect.colliderect(goal):
+        for FinishFlag in self.level.FinishFlag.sprites():
+            if player.rect.colliderect(FinishFlag):
                 player.game_won = True
 
-    def update_level(self, level:Level):
+    def update_level(self, level:Level, dir):
         self.level = level
-        self.player.sprite.rect.x = self.level.spawn_x
-        self.player.sprite.rect.y = self.level.spawn_y
+        player_pos = self.player.sprite.rect
+        if dir == "w":
+            player_pos.x = self.level.width - 1
+            player_pos.y -= 8
+        elif dir == "e":
+            player_pos.x = -player_pos.width + 1
+            player_pos.y -= 8
+        elif dir == "n":
+            player_pos.y = self.level.height - 1
+        elif dir == "s":
+            player_pos.y = -player_pos.height + 1
+        elif dir == "r":
+            player_pos.x = self.level.width // 2
+            player_pos.y = self.level.height // 2
+        elif dir == "reset":
+            player_pos.x = self.level.spawn_x
+            player_pos.y = self.level.spawn_y
+            self._setupWorld()
 
-    def update(self, keys, last_key):
+    def update(self, keys, last_key, events):
         self.level.coins.draw(self.screen)
         self.level.chests.draw(self.screen)
-        self.level.gold_keys.draw(self.screen)
-        self.level.door_gold_key.draw(self.screen)
+        self.level.keys.draw(self.screen)
+        self.level.doors.draw(self.screen)
         self.level.SpikedCubes.draw(self.screen)
-        self.level.goal.draw(self.screen)
+        self.level.FinishFlag.draw(self.screen)
 
         # Movement and collision
         self._ladder_collision()
@@ -214,10 +230,10 @@ class World:
         self._handle_coins()
         self._handle_keys()
         self._handle_enemies()
-        self._handle_goal()
+        self._handle_FinishFlag()
 
         # Update player
-        self.player.update(keys, last_key)
+        self.player.update(keys, last_key, events)
         self.player.draw(self.screen)
 
         if self.player.sprite.life < self.previous_life:
@@ -226,5 +242,3 @@ class World:
 
         # Updates game
         self.game.game_state(self.player.sprite, self.org_screen)
-
-    
