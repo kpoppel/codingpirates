@@ -25,19 +25,6 @@
 		"Walls.png"
 	],
 	"entities": {
-		"GreenKey": [
-			{
-				"id": "GreenKey",
-				"iid": "a3211e60-48b0-11f1-af0f-bbdbd4588864",
-				"layer": "Entities",
-				"x": 80,
-				"y": 176,
-				"width": 8,
-				"height": 8,
-				"color": 2513986,
-				"customFields" : {}
-			}
-		],
 		"BirdEnemy": [
 			{
 				"id": "BirdEnemy",
@@ -71,6 +58,21 @@
 						"cy": 12
 					},
 					"Speed": null
+				}
+			}
+		],
+		"Key": [
+			{
+				"id": "Key",
+				"iid": "4a1c4180-48b0-11f1-88e3-37174504c5fd",
+				"layer": "Entities",
+				"x": 80,
+				"y": 176,
+				"width": 8,
+				"height": 8,
+				"color": 16705377,
+				"customFields": {
+					"Colour": "green"
 				}
 			}
 		]

@@ -26,7 +26,7 @@ DT = 1/60 # Delta time, time between each frame
 
 # INFO stores various base locations to help with file systems
 INFO = types.SimpleNamespace(
-    levelAmount = 9,
+    levelAmount = 34,
     assetsPath = os.path.join(os.path.dirname(__file__), "assets", ""),
     levelsPath = os.path.join(os.path.dirname(__file__), "levels", ""),
     levelFileNames = types.SimpleNamespace(
@@ -34,16 +34,16 @@ INFO = types.SimpleNamespace(
         jsonData = "data.json",
         csvData = "Walls.csv"
     ),
-    levelStartsFromOne = True
+    levelStartsFromOne = False
 )
 
 TICKS = types.SimpleNamespace(
     lavaTick = 60,
-    jumpTick = 8,
+    jumpTick = 15,
     damageDisplayTick = 10
 )
 
 ASSETS = types.SimpleNamespace(
-    heart = pygame.transform.scale(pygame.image.load(INFO.assetsPath + "heart.png"), (45,45)),
+    heart = pygame.transform.scale(pygame.image.load(INFO.assetsPath + "heart.png"), (30,30)),
     damage = pygame.transform.scale(pygame.image.load(INFO.assetsPath + "red.png"), (WIDTH, HEIGHT))
 )

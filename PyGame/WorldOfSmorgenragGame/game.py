@@ -31,7 +31,7 @@ class Game:
     def _draw_life(self, player):
         heart = ASSETS.heart
         for i in range(0, player.life):
-            self.screen.blit(heart, (10+55*i, 100))
+            self.screen.blit(heart, (10+(10+heart.get_width())*i, 100))
 
     def _draw_damage_display(self, player):
         image = ASSETS.damage

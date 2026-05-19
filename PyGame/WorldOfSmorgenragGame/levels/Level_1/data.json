@@ -29,9 +29,9 @@
 		"Walls.png"
 	],
 	"entities": {
-		"DoorGoldKey": [
+		"Door": [
 			{
-				"id": "DoorGoldKey",
+				"id": "Door",
 				"iid": "375f8550-48b0-11f1-af0f-3bf21158e509",
 				"layer": "Entities",
 				"x": 24,
@@ -39,7 +39,9 @@
 				"width": 8,
 				"height": 16,
 				"color": 7552569,
-				"customFields" : {}
+				"customFields": {
+					"Colour": "gold"
+				}
 			}
 		]
 	}

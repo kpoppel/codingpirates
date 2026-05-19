@@ -80,17 +80,19 @@
 				"customFields" : {}
 			}
 		],
-		"RedKey": [
+		"Key": [
 			{
-				"id": "RedKey",
-				"iid": "b44cf830-48b0-11f1-af0f-1de5de92471b",
+				"id": "Key",
+				"iid": "46155f40-48b0-11f1-88e3-afb934833d1b",
 				"layer": "Entities",
 				"x": 152,
 				"y": 16,
 				"width": 8,
 				"height": 8,
-				"color": 10626611,
-				"customFields" : {}
+				"color": 16705377,
+				"customFields": {
+					"Colour": "red"
+				}
 			}
 		]
 	}

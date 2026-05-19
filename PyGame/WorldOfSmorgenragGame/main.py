@@ -62,7 +62,7 @@ class Platformer:
         if player.rect.y > self.height + player.rect.height:
             world.update_level(self.levels[self.level], "r")
             
-    
+
     # Main game loop, runs every frame
     def main(self):
         world = World(self.screen, self.levels[self.level], self.org_screen)

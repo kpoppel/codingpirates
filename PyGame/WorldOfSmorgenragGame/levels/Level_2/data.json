@@ -146,17 +146,19 @@
 				"customFields" : {}
 			}
 		],
-		"DoorBlueKey": [
+		"Door": [
 			{
-				"id": "DoorBlueKey",
-				"iid": "038e1c70-48b0-11f1-af0f-b13a396f2511",
+				"id": "Door",
+				"iid": "25da0780-48b0-11f1-88e3-87cdbde9b2e6",
 				"layer": "Entities",
 				"x": 72,
 				"y": 176,
 				"width": 8,
 				"height": 16,
-				"color": 39387,
-				"customFields" : {}
+				"color": 7552569,
+				"customFields": {
+					"Colour": "blue"
+				}
 			}
 		]
 	}

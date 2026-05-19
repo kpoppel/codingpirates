@@ -29,13 +29,14 @@ class Player(pygame.sprite.Sprite):
         self.inv = []
         self.game_over = False
         self.game_won = False
+        self.game_lost = False
 
     def _get_keys_in_list(self, keys, list):
         for key in list:
             if keys[key]:
                 return True
 
-    def update(self, keys, last_key):
+    def update(self, keys, last_key, events):
         if self.can_jump:
             self.jump_tick -= 1
 
@@ -72,14 +73,24 @@ class Player(pygame.sprite.Sprite):
 
         else:
             # Movement on land
+            # Code below fixes the celing sticking bug, also improves double-jump
+            # for event in events:
+            #     if event.type == pygame.KEYDOWN:
+            #         if event.dict["key"] in UP_KEYS:
+            #             if self.on_ground:
+            #                 self.vel.y = -JUMP_STRENGTH
+            #                 self.can_jump = True
+            #             elif self.can_jump:
+            #                 self.vel.y = -JUMP_STRENGTH
+            #                 self.can_jump = False
             if self._get_keys_in_list(keys, UP_KEYS):
                 if self.on_ground:
                     self.vel.y = -JUMP_STRENGTH
                     self.can_jump = True
+                    self.jump_tick = TICKS.jumpTick
                 elif self.can_jump and self.jump_tick <= 0:
                     self.vel.y = -JUMP_STRENGTH
                     self.can_jump = False
-                    self.jump_tick = 8
             if self._get_keys_in_list(keys, DOWN_KEYS):
                 self.down = True
             else:

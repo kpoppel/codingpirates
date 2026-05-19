@@ -41,19 +41,6 @@
 		"Walls.png"
 	],
 	"entities": {
-		"DoorBlueKey": [
-			{
-				"id": "DoorBlueKey",
-				"iid": "ce7343a0-48b0-11f1-af0f-8f03fb7ab904",
-				"layer": "Entities",
-				"x": 128,
-				"y": 200,
-				"width": 8,
-				"height": 16,
-				"color": 39387,
-				"customFields" : {}
-			}
-		],
 		"Coin": [
 			{
 				"id": "Coin",
@@ -98,6 +85,21 @@
 				"height": 8,
 				"color": 10785059,
 				"customFields" : {}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "1e278260-48b0-11f1-88e3-b17399ef4e64",
+				"layer": "Entities",
+				"x": 128,
+				"y": 200,
+				"width": 8,
+				"height": 16,
+				"color": 7552569,
+				"customFields": {
+					"Colour": "blue"
+				}
 			}
 		]
 	}

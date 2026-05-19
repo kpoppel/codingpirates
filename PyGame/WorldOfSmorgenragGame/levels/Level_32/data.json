@@ -21,17 +21,19 @@
 		"Walls.png"
 	],
 	"entities": {
-		"DoorGreenKey": [
+		"Door": [
 			{
-				"id": "DoorGreenKey",
-				"iid": "49995180-48b0-11f1-88e3-85f68bf2567e",
+				"id": "Door",
+				"iid": "36d4a5e0-48b0-11f1-88e3-b1addee30fc7",
 				"layer": "Entities",
 				"x": 96,
 				"y": 48,
 				"width": 8,
 				"height": 16,
-				"color": 4098376,
-				"customFields" : {}
+				"color": 7552569,
+				"customFields": {
+					"Colour": "green"
+				}
 			}
 		]
 	}

@@ -12,27 +12,28 @@ class Coin(pygame.sprite.Sprite):
 
 
 #---------------------------------------------------Doors
-class GoldKey(pygame.sprite.Sprite):
-    def __init__(self, rect:pygame.Rect):
+class Key(pygame.sprite.Sprite):
+    def __init__(self, rect:pygame.Rect, colour):
         super().__init__()
         self.rect = rect
-        self.image = pygame.image.load(INFO.assetsPath+"gold_key.png")
+        self.colour = colour
+        self.image = pygame.image.load(INFO.assetsPath+colour+"_key.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 
-class DoorGoldKey(pygame.sprite.Sprite):
-    def __init__(self, rect:pygame.Rect):
+class Door(pygame.sprite.Sprite):
+    def __init__(self, rect:pygame.Rect, colour):
         super().__init__()
         self.rect = rect
-        self.image = pygame.image.load(INFO.assetsPath+"door_gold_key.png")
+        self.colour = colour
+        self.image = pygame.image.load(INFO.assetsPath+"door_"+colour+"_key.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
         self.open = False
 
     def openDoor(self, player):
-        if "Gold Key" in player.inv:
+        if self.colour+"_key" in player.inv:
             self.open = True
-            player.inv.remove("Gold Key")
+            # player.inv.remove(self.colour+"_key")
 #---------------------------------------------------
-
 
 #---------------------------------------------------Objects
 class Chest(pygame.sprite.Sprite):
@@ -48,11 +49,11 @@ class Chest(pygame.sprite.Sprite):
             self.open = True
             player.coins += 1000
 
-class Goal(pygame.sprite.Sprite):
+class FinishFlag(pygame.sprite.Sprite):
     def __init__(self, rect:pygame.Rect):
         super().__init__()
         self.rect = rect
-        self.image = pygame.image.load(INFO.assetsPath+"goal.png")
+        self.image = pygame.image.load(INFO.assetsPath+"finish_flag.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 #---------------------------------------------------
 

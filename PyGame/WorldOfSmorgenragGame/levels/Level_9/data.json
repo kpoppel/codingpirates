@@ -90,9 +90,9 @@
 				"customFields" : {}
 			}
 		],
-		"GoldKey": [
+		"Key": [
 			{
-				"id": "GoldKey",
+				"id": "Key",
 				"iid": "9888e2a0-48b0-11f1-af0f-115266b26536",
 				"layer": "Entities",
 				"x": 200,
@@ -100,7 +100,9 @@
 				"width": 8,
 				"height": 8,
 				"color": 16705377,
-				"customFields" : {}
+				"customFields": {
+					"Colour": "gold"
+				}
 			}
 		]
 	}

@@ -11,6 +11,7 @@ class Level:
         self.level = level
         self._getMap()
         self._getMapData()
+        self._getNeighbours()
         self._setUpLevel()
 
     def _getMap(self):
@@ -26,7 +27,7 @@ class Level:
         self.dat = json.load(self.map_json)
 
     def _getNeighbours(self):
-        self.iid = self.dat["uniqueIdentifier"]
+        self.iid = self.dat["uniqueIdentifer"]
         self.neighbours = {}
         for n in self.dat["neighbourLevels"]:
             if n["dir"] == "w" or n["dir"] == "e" or n["dir"] == "s" or n["dir"] == "n":
@@ -75,17 +76,16 @@ class Level:
         #-------------------------------------------------------
 
         #-------------------------------------------------------Doors
-        self.gold_keys = pygame.sprite.Group()
-        if "GoldKey" in self.dat["entities"].keys():
-            for entity in self.dat["entities"]["GoldKey"]:
-                key = GoldKey(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
-                self.gold_keys.add(key)
-        
-        self.door_gold_key = pygame.sprite.Group()
-        if "DoorGoldKey" in self.dat["entities"].keys():
-            for entity in self.dat["entities"]["DoorGoldKey"]:
-                door = DoorGoldKey(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
-                self.door_gold_key.add(door)
+        self.keys = pygame.sprite.Group()
+        if "Key" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Key"]:
+                key = Key(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity["customFields"]["Colour"])
+                self.keys.add(key)
+        self.doors = pygame.sprite.Group()
+        if "Door" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Door"]:
+                door = Door(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity["customFields"]["Colour"])
+                self.doors.add(door)
         #-------------------------------------------------------
 
         #-------------------------------------------------------Objects
@@ -95,11 +95,11 @@ class Level:
                 chest = Chest(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
                 self.chests.add(chest)
 
-        self.goal = pygame.sprite.GroupSingle()
-        if "Goal" in self.dat["entities"].keys():
-            entity = self.dat["entities"]["Goal"][0]
-            goal = Goal(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
-            self.goal.add(goal)
+        self.FinishFlag = pygame.sprite.GroupSingle()
+        if "FinishFlag" in self.dat["entities"].keys():
+            entity = self.dat["entities"]["FinishFlag"][0]
+            finishFlag = FinishFlag(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+            self.FinishFlag.add(finishFlag)
         #-------------------------------------------------------
 
         #-------------------------------------------------------Enemies
@@ -114,7 +114,7 @@ class Level:
         if "PlayerSpawn" in self.dat["entities"].keys():
             self.player_spawn = (self.dat["entities"]["PlayerSpawn"][0]["x"], self.dat["entities"]["PlayerSpawn"][0]["y"])
         else:
-            self.player_spawn = (0, 0)
+            self.player_spawn = (0,0)
 
         self.spawn_x = int(self.player_spawn[0] * SCALE)
         self.spawn_y = int(self.player_spawn[1] * SCALE)

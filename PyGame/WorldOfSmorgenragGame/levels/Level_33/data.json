@@ -17,19 +17,6 @@
 		"Walls.png"
 	],
 	"entities": {
-		"BlueKey": [
-			{
-				"id": "BlueKey",
-				"iid": "6751f600-48b0-11f1-88e3-edac686bb5b7",
-				"layer": "Entities",
-				"x": 136,
-				"y": 144,
-				"width": 8,
-				"height": 8,
-				"color": 2943221,
-				"customFields" : {}
-			}
-		],
 		"Coin": [
 			{
 				"id": "Coin",
@@ -235,6 +222,21 @@
 						"cy": 18
 					},
 					"Speed": 72
+				}
+			}
+		],
+		"Key": [
+			{
+				"id": "Key",
+				"iid": "4d99a870-48b0-11f1-88e3-1f9ff4e99ede",
+				"layer": "Entities",
+				"x": 136,
+				"y": 144,
+				"width": 8,
+				"height": 8,
+				"color": 16705377,
+				"customFields": {
+					"Colour": "blue"
 				}
 			}
 		]
