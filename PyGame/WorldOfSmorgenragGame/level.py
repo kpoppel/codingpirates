@@ -108,6 +108,18 @@ class Level:
             for entity in self.dat["entities"]["SpikedCubeEnemy"]:
                 spiked_cube = SpikedCube(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
                 self.SpikedCubes.add(spiked_cube)
+
+        self.FishEnemies = pygame.sprite.Group()
+        if "FishEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["FishEnemy"]:
+                fish_enemy = FishEnemy(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.FishEnemies.add(fish_enemy)
+
+        self.BirdEnemies = pygame.sprite.Group()
+        if "BirdEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["BirdEnemy"]:
+                bird_enemy = BirdEnemy(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.BirdEnemies.add(bird_enemy)
         #-------------------------------------------------------
     
         # Player spawn

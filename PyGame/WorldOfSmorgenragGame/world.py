@@ -171,6 +171,16 @@ class World:
                 player.life -= 1
                 player.lava_tick = 0
             enemy.move()
+        for enemy in self.level.BirdEnemies.sprites():
+            if enemy.rect.colliderect(player.rect) and player.lava_tick >= 60:
+                player.life -= 1
+                player.lava_tick = 0
+            enemy.move()
+        for enemy in self.level.FishEnemies.sprites():
+            if enemy.rect.colliderect(player.rect) and player.lava_tick >= 60:
+                player.life -= 1
+                player.lava_tick = 0
+            enemy.move()
 
     def _open_doors(self):
         player = self.player.sprite
@@ -185,6 +195,16 @@ class World:
         for FinishFlag in self.level.FinishFlag.sprites():
             if player.rect.colliderect(FinishFlag):
                 player.game_won = True
+
+    def _destroy_block(self, events):
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.dict["button"] == 1:
+                    mouse_rect = pygame.rect.Rect(event.dict["pos"][0], event.dict["pos"][1], 1, 1)
+                    for tile in self.level.walls.sprites():
+                        if tile.rect.colliderect(mouse_rect):
+                            self.level.walls.remove(tile)
+                        
 
     def update_level(self, level:Level, dir):
         self.level = level
@@ -213,6 +233,8 @@ class World:
         self.level.keys.draw(self.screen)
         self.level.doors.draw(self.screen)
         self.level.SpikedCubes.draw(self.screen)
+        self.level.FishEnemies.draw(self.screen)
+        self.level.BirdEnemies.draw(self.screen)
         self.level.FinishFlag.draw(self.screen)
 
         # Movement and collision
@@ -235,6 +257,7 @@ class World:
         # Update player
         self.player.update(keys, last_key, events)
         self.player.draw(self.screen)
+        self._destroy_block(events)
 
         if self.player.sprite.life < self.previous_life:
             self.player.sprite.display_damage = True

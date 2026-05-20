@@ -104,5 +104,15 @@ class SpikedCube(pygame.sprite.Sprite):
         self.rect.y = new_location.y
         self.old_unitVector = unitVector.copy()
 
+class BirdEnemy(SpikedCube):
+    def __init__(self, rect:pygame.Rect, data:dict):
+        super().__init__(rect, data)
+        self.image = pygame.image.load(INFO.assetsPath+"bird_enemy.png")
+        self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 
+class FishEnemy(SpikedCube):
+    def __init__(self, rect:pygame.Rect, data:dict):
+        super().__init__(rect, data)
+        self.image = pygame.image.load(INFO.assetsPath+"fish_enemy.png")
+        self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 #---------------------------------------------------

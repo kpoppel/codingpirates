@@ -20,5 +20,42 @@
 	"layers": [
 		"Walls.png"
 	],
-	"entities" : {}
+	"entities": {
+		"BirdEnemy": [
+			{
+				"id": "BirdEnemy",
+				"iid": "2fb3f1a0-48b0-11f1-8564-254cd9f5f747",
+				"layer": "Entities",
+				"x": 48,
+				"y": 80,
+				"width": 8,
+				"height": 8,
+				"color": 14120515,
+				"customFields": {
+					"EndLocation": {
+						"cx": 15,
+						"cy": 19
+					},
+					"Speed": 72
+				}
+			},
+			{
+				"id": "BirdEnemy",
+				"iid": "3120ef20-48b0-11f1-8564-5f490ac238c3",
+				"layer": "Entities",
+				"x": 168,
+				"y": 96,
+				"width": 8,
+				"height": 8,
+				"color": 14120515,
+				"customFields": {
+					"EndLocation": {
+						"cx": 14,
+						"cy": 5
+					},
+					"Speed": 72
+				}
+			}
+		]
+	}
 }
