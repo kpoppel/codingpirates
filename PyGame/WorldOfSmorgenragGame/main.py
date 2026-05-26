@@ -7,7 +7,7 @@ pygame.init()
 
 org_screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen = org_screen.copy()
-pygame.display.set_caption("[GAME NAME HERE]")
+pygame.display.set_caption("World of Smorgenrag")
 
 class Platformer:
     def __init__(self, screen, width, height, org_screen):

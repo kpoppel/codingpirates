@@ -1,0 +1,1 @@
+pyinstaller --add-data entities.py:. --add-data game.py:. --add-data level.py:. --add-data player.py:. --add-data settings.py:. --add-data tiles.py:. --add-data world.py:. --add-data assets\*:assets --add-data levels\*:levels main.py

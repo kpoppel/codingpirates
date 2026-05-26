@@ -1,0 +1,150 @@
+import pygame, os
+from tiles import *
+from entities import *
+from settings import *
+import json
+
+class Level:
+    def __init__(self, width, height, level):
+        self.width = width
+        self.height = height
+        self.level = level
+        self._getMap()
+        self._getMapData()
+        self._getNeighbours()
+        self._setUpLevel()
+
+    def _getMap(self):
+        filepath = os.path.join(INFO.levelsPath,"Level_"+str(self.level), INFO.levelFileNames.background)
+        self.bg = pygame.image.load(filepath)
+        self.bg = pygame.transform.scale(self.bg, (self.width,self.height))
+
+    def _getMapData(self):
+        filepath = os.path.join(INFO.levelsPath, "Level_"+str(self.level), INFO.levelFileNames.csvData)
+        self.map_data = filepath
+        filepath = os.path.join(INFO.levelsPath, "Level_"+str(self.level), INFO.levelFileNames.jsonData)
+        self.map_json = open(filepath, "r")
+        self.dat = json.load(self.map_json)
+
+    def _getNeighbours(self):
+        self.iid = self.dat["uniqueIdentifer"]
+        self.neighbours = {}
+        for n in self.dat["neighbourLevels"]:
+            if n["dir"] == "w" or n["dir"] == "e" or n["dir"] == "s" or n["dir"] == "n":
+                self.neighbours[n["dir"]] = n["levelIid"]
+
+    def _setUpLevel(self):
+        # World tiles
+        self.walls = pygame.sprite.Group()
+        self.water = pygame.sprite.Group()
+        self.platforms = pygame.sprite.Group()
+        self.ladders = pygame.sprite.Group()
+        self.lava = pygame.sprite.Group()
+
+        parsedWalls = self._parseCSV("1")
+        for tile in parsedWalls:
+            wall = Wall(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.walls.add(wall)
+
+        parsedWater = self._parseCSV("2")
+        for tile in parsedWater:
+            water = Water(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.water.add(water)
+
+        parsedLadders = self._parseCSV("3")
+        for tile in parsedLadders:
+            ladder = Ladder(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.ladders.add(ladder)
+
+        parsedPlatforms = self._parseCSV("4")
+        for tile in parsedPlatforms:
+            platform = Platform(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.platforms.add(platform)
+
+        parsedLava = self._parseCSV("5")
+        for tile in parsedLava:
+            lava = Lava(pygame.Rect(tile[0]*TILE_SIZE, tile[1]*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            self.lava.add(lava)
+
+        # World entities
+        #-------------------------------------------------------Pickups
+        self.coins = pygame.sprite.Group()
+        if "Coin" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Coin"]:
+                coin = Coin(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+                self.coins.add(coin)
+        #-------------------------------------------------------
+
+        #-------------------------------------------------------Doors
+        self.keys = pygame.sprite.Group()
+        if "Key" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Key"]:
+                key = Key(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity["customFields"]["Colour"])
+                self.keys.add(key)
+        self.doors = pygame.sprite.Group()
+        if "Door" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Door"]:
+                door = Door(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity["customFields"]["Colour"])
+                self.doors.add(door)
+        #-------------------------------------------------------
+
+        #-------------------------------------------------------Objects
+        self.chests = pygame.sprite.Group()
+        if "Chest" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["Chest"]:
+                chest = Chest(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+                self.chests.add(chest)
+
+        self.FinishFlag = pygame.sprite.GroupSingle()
+        if "FinishFlag" in self.dat["entities"].keys():
+            entity = self.dat["entities"]["FinishFlag"][0]
+            finishFlag = FinishFlag(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE))
+            self.FinishFlag.add(finishFlag)
+        #-------------------------------------------------------
+
+        #-------------------------------------------------------Enemies
+        self.SpikedCubes = pygame.sprite.Group()
+        if "SpikedCubeEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["SpikedCubeEnemy"]:
+                spiked_cube = SpikedCube(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.SpikedCubes.add(spiked_cube)
+
+        self.FishEnemies = pygame.sprite.Group()
+        if "FishEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["FishEnemy"]:
+                fish_enemy = FishEnemy(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.FishEnemies.add(fish_enemy)
+
+        self.BirdEnemies = pygame.sprite.Group()
+        if "BirdEnemy" in self.dat["entities"].keys():
+            for entity in self.dat["entities"]["BirdEnemy"]:
+                bird_enemy = BirdEnemy(pygame.Rect(entity["x"] * SCALE, entity["y"] * SCALE, entity["width"] * SCALE, entity["height"] * SCALE), entity)
+                self.BirdEnemies.add(bird_enemy)
+        #-------------------------------------------------------
+    
+        # Player spawn
+        if "PlayerSpawn" in self.dat["entities"].keys():
+            self.player_spawn = (self.dat["entities"]["PlayerSpawn"][0]["x"], self.dat["entities"]["PlayerSpawn"][0]["y"])
+        else:
+            self.player_spawn = (0,0)
+
+        self.spawn_x = int(self.player_spawn[0] * SCALE)
+        self.spawn_y = int(self.player_spawn[1] * SCALE)
+
+    def _parseCSV(self, key:str):
+        f = open(self.map_data, "r")
+
+        contentArray = []
+        x = 0
+        y = 0
+
+        for line in f:
+            linecontents = [cell.strip() for cell in line.split(",")]
+            for tile in linecontents:
+                tile = tile.strip()
+                if tile == key:
+                    contentArray.append((x,y))
+                x += 1
+            y += 1
+            x = 0
+        return contentArray

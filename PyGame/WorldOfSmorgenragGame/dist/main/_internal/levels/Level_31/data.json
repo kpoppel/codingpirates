@@ -1,0 +1,61 @@
+{
+	"identifier": "Level_31",
+	"uniqueIdentifer": "047dd210-48b0-11f1-88e3-37e2ec4f9139",
+	"x": 1792,
+	"y": 0,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "b6800460-48b0-11f1-af0f-61b669f434f1",
+			"dir": "w"
+		},
+		{
+			"levelIid": "33f79940-48b0-11f1-88e3-c992bf71e1b4",
+			"dir": "e"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"BirdEnemy": [
+			{
+				"id": "BirdEnemy",
+				"iid": "2fb3f1a0-48b0-11f1-8564-254cd9f5f747",
+				"layer": "Entities",
+				"x": 48,
+				"y": 80,
+				"width": 8,
+				"height": 8,
+				"color": 14120515,
+				"customFields": {
+					"EndLocation": {
+						"cx": 15,
+						"cy": 19
+					},
+					"Speed": 72
+				}
+			},
+			{
+				"id": "BirdEnemy",
+				"iid": "3120ef20-48b0-11f1-8564-5f490ac238c3",
+				"layer": "Entities",
+				"x": 168,
+				"y": 96,
+				"width": 8,
+				"height": 8,
+				"color": 14120515,
+				"customFields": {
+					"EndLocation": {
+						"cx": 14,
+						"cy": 5
+					},
+					"Speed": 72
+				}
+			}
+		]
+	}
+}

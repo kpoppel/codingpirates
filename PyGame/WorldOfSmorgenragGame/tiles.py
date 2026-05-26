@@ -7,6 +7,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect = rect
         self.image = pygame.image.load(INFO.assetsPath+"empty.png")
         self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
+        self.destroyed = False
 
 class Water(pygame.sprite.Sprite):
     def __init__(self, rect:pygame.Rect):

@@ -41,6 +41,7 @@ class World:
         else:
             player.vel.x *= DRAG
         for sprite in self.level.walls.sprites():
+            if sprite.destroyed: continue
             if sprite.rect.colliderect(player.rect):
                 # checks if moving towards left
                 if player.vel.x < 0:
@@ -61,6 +62,7 @@ class World:
         player = self.player.sprite
         self._applyGravity(player)
         for sprite in self.level.walls.sprites():
+            if sprite.destroyed: continue
             if sprite.rect.colliderect(player.rect):
                 # checks if moving towards bottom, except when holding down and on platform
                 if player.vel.y > 0:
@@ -203,7 +205,9 @@ class World:
                     mouse_rect = pygame.rect.Rect(event.dict["pos"][0], event.dict["pos"][1], 1, 1)
                     for tile in self.level.walls.sprites():
                         if tile.rect.colliderect(mouse_rect):
-                            self.level.walls.remove(tile)
+                            tile.destroyed = True
+                            tile.image = pygame.image.load(INFO.assetsPath+"destroyed_tile.png")
+                            tile.image = pygame.transform.scale(tile.image, (tile.rect.width, tile.rect.height))
                         
 
     def update_level(self, level:Level, dir):
@@ -228,6 +232,7 @@ class World:
             self._setupWorld()
 
     def update(self, keys, last_key, events):
+        self.level.walls.draw(self.screen)
         self.level.coins.draw(self.screen)
         self.level.chests.draw(self.screen)
         self.level.keys.draw(self.screen)

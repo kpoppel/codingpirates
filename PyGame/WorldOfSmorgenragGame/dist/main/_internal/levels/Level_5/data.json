@@ -1,0 +1,60 @@
+{
+	"identifier": "Level_5",
+	"uniqueIdentifer": "602c8220-48b0-11f1-af0f-a16b11185a3d",
+	"x": -256,
+	"y": -256,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "ceb467e0-21a0-11f1-a323-0f539c913532",
+			"dir": "se"
+		},
+		{
+			"levelIid": "3dba5b30-21a0-11f1-99dd-cfb9d6246271",
+			"dir": "s"
+		},
+		{
+			"levelIid": "5180dcd0-48b0-11f1-af0f-d9acaf0d0208",
+			"dir": "e"
+		},
+		{
+			"levelIid": "4dfef720-48b0-11f1-af0f-15cc51801516",
+			"dir": "sw"
+		},
+		{
+			"levelIid": "d4bb31b0-48b0-11f1-af0f-addde515f2a0",
+			"dir": "n"
+		},
+		{
+			"levelIid": "d5e42150-48b0-11f1-af0f-591644f96a42",
+			"dir": "ne"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"SpikedCubeEnemy": [
+			{
+				"id": "SpikedCubeEnemy",
+				"iid": "70e2c7b0-48b0-11f1-af0f-abaa6dadd7a5",
+				"layer": "Entities",
+				"x": 136,
+				"y": 176,
+				"width": 8,
+				"height": 8,
+				"color": 10626611,
+				"customFields": {
+					"EndLocation": {
+						"cx": 30,
+						"cy": 22
+					},
+					"Speed": 72
+				}
+			}
+		]
+	}
+}

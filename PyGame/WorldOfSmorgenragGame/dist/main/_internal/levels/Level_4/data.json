@@ -1,0 +1,68 @@
+{
+	"identifier": "Level_4",
+	"uniqueIdentifer": "5180dcd0-48b0-11f1-af0f-d9acaf0d0208",
+	"x": 0,
+	"y": -256,
+	"width": 256,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [
+		{
+			"levelIid": "ceb467e0-21a0-11f1-a323-0f539c913532",
+			"dir": "s"
+		},
+		{
+			"levelIid": "3dba5b30-21a0-11f1-99dd-cfb9d6246271",
+			"dir": "sw"
+		},
+		{
+			"levelIid": "3f0578d0-21a0-11f1-99dd-9fa2ea2a0c68",
+			"dir": "se"
+		},
+		{
+			"levelIid": "23826b00-48b0-11f1-af0f-97085329a589",
+			"dir": "e"
+		},
+		{
+			"levelIid": "602c8220-48b0-11f1-af0f-a16b11185a3d",
+			"dir": "w"
+		},
+		{
+			"levelIid": "d4bb31b0-48b0-11f1-af0f-addde515f2a0",
+			"dir": "nw"
+		},
+		{
+			"levelIid": "d5e42150-48b0-11f1-af0f-591644f96a42",
+			"dir": "n"
+		},
+		{
+			"levelIid": "ff6c7450-48b0-11f1-af0f-d304545b01ea",
+			"dir": "ne"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Walls.png"
+	],
+	"entities": {
+		"SpikedCubeEnemy": [
+			{
+				"id": "SpikedCubeEnemy",
+				"iid": "68222df0-48b0-11f1-af0f-8d09c64c6feb",
+				"layer": "Entities",
+				"x": 104,
+				"y": 168,
+				"width": 8,
+				"height": 8,
+				"color": 10626611,
+				"customFields": {
+					"EndLocation": {
+						"cx": 24,
+						"cy": 21
+					},
+					"Speed": 72
+				}
+			}
+		]
+	}
+}
