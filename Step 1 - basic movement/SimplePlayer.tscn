@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d235im5mves7c"]
+
+[ext_resource type="Script" uid="uid://db0mykg4sdpon" path="res://Step 1 - basic movement/simple_movement.gd" id="1_l6865"]
+[ext_resource type="Texture2D" uid="uid://b7har2887ftup" path="res://_Shared/Racecar.png" id="2_td05r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x4av3"]
+radius = 4.0
+height = 16.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1740764771]
+script = ExtResource("1_l6865")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1062579607]
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_x4av3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2137237238]
+scale = Vector2(2, 2)
+texture = ExtResource("2_td05r")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=787919198]

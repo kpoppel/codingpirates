@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://caaj182uvef1t"]
+
+[ext_resource type="Script" uid="uid://buw3d0btartgq" path="res://Step 2 - physics based movement/physics_movement.gd" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://b7har2887ftup" path="res://_Shared/Racecar.png" id="1_xhfnw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x4av3"]
+radius = 4.0
+height = 16.0
+
+[node name="Player" type="RigidBody2D" unique_id=173171234]
+gravity_scale = 0.0
+linear_damp = 3.0
+angular_damp = 5.0
+script = ExtResource("1_kpjcp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1062579607]
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_x4av3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2137237238]
+scale = Vector2(2, 2)
+texture = ExtResource("1_xhfnw")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=787919198]

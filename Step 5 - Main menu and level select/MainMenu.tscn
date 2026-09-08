@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://cjyjf2k42xehy"]
+
+[ext_resource type="Script" uid="uid://b6nogn5smn1du" path="res://Step 5 - Main menu and level select/start_game.gd" id="1_lc00b"]
+[ext_resource type="Script" uid="uid://dhh01cacidy3a" path="res://Step 5 - Main menu and level select/exit.gd" id="1_mi6w1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5eui"]
+bg_color = Color(0, 0.7249666, 0.21640894, 1)
+
+[node name="MainMenu" type="Control" unique_id=655115303]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="PanelContainer" parent="." unique_id=533425538]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n5eui")
+
+[node name="MenuContainer" type="MarginContainer" parent="Background" unique_id=48930298]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TitleContainer" type="MarginContainer" parent="Background/MenuContainer" unique_id=602756473]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_bottom = 0
+
+[node name="Title" type="RichTextLabel" parent="Background/MenuContainer/TitleContainer" unique_id=35134241]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/bold_font_size = 48
+bbcode_enabled = true
+text = "[b]Wind racers[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuOrganiser" type="VBoxContainer" parent="Background/MenuContainer" unique_id=1721719186]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="StartGame" type="Button" parent="Background/MenuContainer/MenuOrganiser" unique_id=1451799597]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Start"
+script = ExtResource("1_lc00b")
+
+[node name="Exit" type="Button" parent="Background/MenuContainer/MenuOrganiser" unique_id=1335424301]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Quit Game"
+script = ExtResource("1_mi6w1")

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dry5frmu3is21"]
+
+[ext_resource type="Script" uid="uid://dyr7tvsvs1xt2" path="res://Step 3 - Braking on ground/brake_movement.gd" id="1_bl5nr"]
+[ext_resource type="Texture2D" uid="uid://b7har2887ftup" path="res://_Shared/Racecar.png" id="2_ya04n"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x4av3"]
+radius = 4.0
+height = 16.0
+
+[node name="Player" type="RigidBody2D" unique_id=173171234]
+gravity_scale = 0.0
+linear_damp = 3.0
+angular_damp = 10.0
+script = ExtResource("1_bl5nr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1062579607]
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_x4av3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2137237238]
+scale = Vector2(2, 2)
+texture = ExtResource("2_ya04n")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=787919198]

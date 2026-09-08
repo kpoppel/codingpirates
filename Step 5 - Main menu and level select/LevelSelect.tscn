@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://x822qy7h3nrj"]
+
+[ext_resource type="Script" uid="uid://hvrjsyelpnua" path="res://Step 5 - Main menu and level select/pick_level.gd" id="1_qoyoi"]
+[ext_resource type="PackedScene" uid="uid://cqv1wjxsv5a68" path="res://Step 5 - Main menu and level select/Levels/Level_1.tscn" id="2_wudwl"]
+[ext_resource type="PackedScene" uid="uid://chad6niwoc73q" path="res://Step 5 - Main menu and level select/Levels/Level_2.tscn" id="3_aoagv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ngo1"]
+bg_color = Color(0, 0.7249666, 0.21640894, 1)
+
+[node name="LevelSelect" type="Control" unique_id=799577014]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="PanelContainer" parent="." unique_id=792664068]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ngo1")
+
+[node name="VerticalOrganiser" type="VBoxContainer" parent="Background" unique_id=939506059]
+layout_mode = 2
+
+[node name="TopMargin" type="MarginContainer" parent="Background/VerticalOrganiser" unique_id=1037201376]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="TopMenu" type="HBoxContainer" parent="Background/VerticalOrganiser/TopMargin" unique_id=452782368]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Back" type="Button" parent="Background/VerticalOrganiser/TopMargin/TopMenu" unique_id=1175861792]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "⮌"
+
+[node name="Title" type="Label" parent="Background/VerticalOrganiser/TopMargin/TopMenu" unique_id=770065115]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Select level"
+
+[node name="GridMargin" type="MarginContainer" parent="Background" unique_id=1874496039]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="LevelGrid" type="GridContainer" parent="Background/GridMargin" unique_id=670445226]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 50
+columns = 5
+
+[node name="Level1" type="Button" parent="Background/GridMargin/LevelGrid" unique_id=915212851]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "1"
+script = ExtResource("1_qoyoi")
+level = ExtResource("2_wudwl")
+
+[node name="Level2" type="Button" parent="Background/GridMargin/LevelGrid" unique_id=1000021716]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "2"
+script = ExtResource("1_qoyoi")
+level = ExtResource("3_aoagv")
