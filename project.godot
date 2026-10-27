@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Coding Windmill Project - Racecar"
-run/main_scene="uid://b12iaynbkincx"
+run/main_scene="uid://cjyjf2k42xehy"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://_Shared/icon.svg"
 

@@ -28,7 +28,7 @@ shape = SubResource("RectangleShape2D_epa72")
 [node name="CurrentLapTime" type="Label" parent="." unique_id=2060742774]
 offset_left = 134.0
 offset_top = 323.0
-offset_right = 174.0
+offset_right = 222.0
 offset_bottom = 346.0
 text = "Time: 00:00"
 

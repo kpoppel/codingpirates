@@ -9,21 +9,26 @@ var lap_counts: int = 0 # Starting at 0 ensures first passover isn't counted
 
 func GetTime() -> String:
 	var text = ""
+	var t = time
 	
 	# Counts minutes
-	if time / 60 < 10:
+	if t / 60 < 10:
 		text += "0"
-	text += str(int(floor(time / 60))) + ":"
+	text += str(floori(t / 60)) + ":"
+	
+	t -= floori(t / 60) * 60
 	
 	# Counts seconds	
-	if time < 10:
+	if t < 10:
 		text += "0"
-	text += str(int(floor(time))) + ":"
+	text += str(floori(t)) + ":"
+	
+	t -= floori(t)
 	
 	# Counts centiseconds
-	if floor((time - floor(time)) * 100) < 10:
+	if floor((t - floor(t)) * 100) < 10:
 		text += "0"
-	text += str(int(floor((time - floor(time)) * 100)))
+	text += str(floori((t - floor(t)) * 100))
 	
 	return text
 
@@ -38,7 +43,7 @@ func _on_body_entered(_body: Node2D) -> void:
 	counting = true
 
 func _on_body_exited(_body: Node2D) -> void:
-	if !(lap_counts == 0):
+	if lap_counts != 0:
 		prev_time_label.text += str(int(lap_counts)) + ". " + GetTime() + "\n"
 		time = 0
 		lap_counts += 1
